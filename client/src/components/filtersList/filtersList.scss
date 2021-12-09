@@ -1,0 +1,25 @@
+@import '../../styles/variables.scss';
+
+.filter-list {
+    width: 100%;
+
+    &__title {
+        cursor: pointer;
+        width: 100%;
+        background-color: $main-bg;
+        padding: 7px 5px;
+        padding-left: 15px;
+        margin-bottom: 4px;
+        @extend %title-fonts;
+    }
+
+    &__items {
+        padding-left: 15px;
+    }
+
+    .hidden {
+        visibility: hidden;
+        height: 0;
+        font-size: 0;
+    }
+}

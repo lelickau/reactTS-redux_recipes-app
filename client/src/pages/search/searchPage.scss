@@ -1,0 +1,91 @@
+@import '../../styles/variables.scss';
+
+.search {
+    padding: 70px 122px 38px;
+    display: flex;
+    align-items: flex-start;
+
+    &__item {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 57px;
+        margin-left: 37px;
+        padding: 36px 35px 38px;
+        box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.04);
+        border-radius: 10px;
+        background-color: $box-color;
+    }
+
+    &__item-title {
+        width: 100%;
+        margin-bottom: 25px;
+        @extend %accent-title-fonts;
+    }
+
+    &__input-box {
+        width: 100%;
+        display: flex;
+    }
+
+    .main-btn {
+        margin-left: 15px;
+        width: 120px;
+    }
+
+    .item-filter {
+        width: 650px;
+    }
+
+    &__filters-box {
+        width: 100%;
+    }
+
+    &__filter-item {
+        margin-bottom: 27px;
+    }
+
+    &__filter-title {
+        margin-bottom: 15px;
+        @extend %title-fonts;
+    }
+
+    &__filter-ingr {
+        position: relative;
+        width: 133px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: $text-color;
+
+        .main-input {
+            width: 56px;
+            padding: 0 14px;
+            margin-bottom: 4px;
+            text-align: center;
+
+            &::-webkit-input-placeholder,
+            &:-moz-placeholder,
+            &::-moz-placeholder,
+            :-ms-input-placeholder {
+                text-align: center;
+            }
+        }
+
+        &::after {
+            position: absolute;
+            content: "-";
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    &__filter-ingr-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: $accent-color;
+    }
+
+}

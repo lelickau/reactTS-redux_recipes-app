@@ -1,0 +1,20 @@
+@import '../../../styles/variables.scss';
+
+.main-btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 32px;
+    padding-right: 32px;
+    width: 100%;
+    height: 42px;
+    color: $box-color;
+    background-color: $accent-color;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    box-shadow: 0px 4px 19px rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+}

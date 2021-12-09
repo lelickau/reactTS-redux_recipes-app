@@ -1,0 +1,40 @@
+$main-bg: #F9F9F9;
+$box-color: #FFFFFF;
+$text-color: #5C5C5C;
+$placeholder-color: #A1A1A1;
+$accent-color: #59B7B3;
+
+%title-fonts {
+    color: $text-color;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+}
+
+%accent-title-fonts {
+    color: $accent-color;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+}
+
+%text-fonts {
+    color: $text-color;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+%accent-text-fonts {
+    color: $accent-color;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+%placeholder-fonts {
+    color: $placeholder-color;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+}

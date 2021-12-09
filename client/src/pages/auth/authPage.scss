@@ -1,0 +1,78 @@
+@import '../../styles/variables.scss';
+
+.auth {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    &__form {
+        position: relative;
+        padding: 37px;
+        padding-left: 60px;
+        padding-right: 60px;
+        width:  40%;
+        min-width: 374px;
+        height: 414px;
+        min-height: 352px;
+        background: $box-color;
+        box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.04);
+        border-radius: 10px;
+    }
+
+    &__title {
+        @extend %accent-title-fonts;
+        text-align: center;
+        margin-bottom: 27px;
+    }
+
+    &__input-box {
+        margin-bottom: 7%;
+    }
+
+    &__btn-box {
+        margin: 0 auto;
+        width: 30%;
+        min-width: 117px;
+    }
+
+    &__change-auth {
+        position: absolute;
+        bottom: 9%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &__create-btn {
+        @extend %accent-text-fonts;
+        margin-left: 5px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+@media (max-width: 1400px) {
+    .auth {
+        &__form {
+            padding-left: 37px;
+            padding-right: 37px;
+        }
+    }
+}
+
+@media (max-width: 1300px) {
+    .auth {
+        &__form {
+
+            height: 374px;
+        }
+        &__change-auth {
+            position: static;
+            left: auto;
+            transform: translateX(0);
+            margin-top: 30px;
+            text-align: center;
+        }
+    }
+}

@@ -1,0 +1,280 @@
+[
+    {
+        "type": "diet",
+        "id": "balanced",
+        "title": "Balanced",
+        "descr": "Protein/Fat/Carb values in 15/35/50 ratio"
+    },
+    {
+        "type": "diet",
+        "id": "high-fiber",
+        "title": "High-Fiber",
+        "descr": "More than 5g fiber per serving"
+    },
+    {
+        "type": "diet",
+        "id": "high-protein",
+        "title": "High-Protein",
+        "descr": "More than 50% of total calories from proteins"
+    },
+    {
+        "type": "diet",
+        "id": "low-carb",
+        "title": "Low-Carb",
+        "descr": "Less than 20% of total calories from carbs"
+    },
+    {
+        "type": "diet",
+        "id": "low-fat",
+        "title": "Low-Fat",
+        "descr": "Less than 15% of total calories from fat"
+    },
+    {
+        "type": "diet",
+        "id": "low-sodium",
+        "title": "Low-Sodium",
+        "descr": "Less than 140mg Na per serving"
+    },
+    {
+        "type": "health",
+        "id": "vegan",
+        "title": "Vegan",
+        "descr": "No meat, poultry, fish, dairy, eggs or honey"
+    },
+    {
+        "type": "health",
+        "id": "vegetarian",
+        "title": "Vegetarian",
+        "descr": "No meat, poultry, or fish"
+    },
+    {
+        "type": "health",
+        "id": "sugar-conscious",
+        "title": "Sugar-Conscious",
+        "descr": "Less than 4g of sugar per serving"
+    },
+    {
+        "type": "health",
+        "id": "soy-free",
+        "title": "Soy-Free",
+        "descr": "No soy or products containing soy"
+    },
+    {
+        "type": "health",
+        "id": "shellfish-free",
+        "title": "Shellfish-Free",
+        "descr": "No shellfish or shellfish derivatives"
+    },
+    {
+        "type": "health",
+        "id": "red-meat-free",
+        "title": "Red-Meat-Free",
+        "descr": "Does not contain beef, lamb, pork, duck, goose, game, horse, and other types of red meat or products containing red meat."
+    },
+    {
+        "type": "health",
+        "id": "pork-free",
+        "title": "Pork-Free",
+        "descr": "Does not contain pork or derivatives"
+    },
+    {
+        "type": "health",
+        "id": "pecatarian",
+        "title": "Pescatarian",
+        "descr": "Does not contain meat or meat based products, can contain dairy and fish"
+    },
+    {
+        "type": "health",
+        "id": "peanut-free",
+        "title": "Peanut-Free",
+        "descr": "No peanuts or products containing peanuts"
+    },
+    {
+        "type": "health",
+        "id": "Mediterranean",
+        "title": "Mediterranean",
+        "descr": "Mediterranean diet"
+    },
+    {
+        "type": "health",
+        "id": "kosher",
+        "title": "Kosher",
+        "descr": "Contains only ingredients allowed by the kosher diet. However it does not guarantee kosher preparation of the ingredients themselves"
+    },
+    {
+        "type": "health",
+        "id": "low-sugar",
+        "title": "Low Sugar",
+        "descr": "No simple sugars – glucose, dextrose, galactose, fructose, sucrose, lactose, maltose"
+    },
+    {
+        "type": "health",
+        "id": "keto-friendly",
+        "title": "Keto-Friendly",
+        "descr": "Maximum 7 grams of net carbs per serving"
+    },
+    {
+        "type": "health",
+        "id": "gluten-free",
+        "title": "Gluten-Free",
+        "descr": "No ingredients containing gluten"
+    },
+    {
+        "type": "health",
+        "id": "egg-free",
+        "title": "Egg-Free",
+        "descr": "No eggs or products containing eggs"
+    },
+    {
+        "type": "health",
+        "id": "dairy-free",
+        "title": "Dairy-Free",
+        "descr": "No dairy, no lactose"
+    },
+    {
+        "type": "health",
+        "id": "alcohol-free",
+        "title": "Alcohol-Free",
+        "descr": "No alcohol used or contained"
+    },
+    {
+        "type": "mealType",
+        "id": "Breakfast",
+        "title": "Breakfast"
+    },
+    {
+        "type": "mealType",
+        "id": "Lunch",
+        "title": "Lunch"
+    },
+    {
+        "type": "mealType",
+        "id": "Dinner",
+        "title": "Dinner"
+    },
+    {
+        "type": "mealType",
+        "id": "Snack",
+        "title": "Snack"
+    },
+    {
+        "type": "mealType",
+        "id": "Teatime",
+        "title": "Teatime"
+    },
+    {
+        "type": "dishType",
+        "id": "Alcohol-cocktail",
+        "title": "Alcohol-cocktail"
+    },
+    {
+        "type": "dishType",
+        "id": "Bread",
+        "title": "Bread"
+    },
+    {
+        "type": "dishType",
+        "id": "Cereals",
+        "title": "Cereals"
+    },
+    {
+        "type": "dishType",
+        "id": "Drinks",
+        "title": "Drinks"
+    },
+    {
+        "type": "dishType",
+        "id": "Desserts",
+        "title": "Desserts"
+    },
+    {
+        "type": "dishType",
+        "id": "Preserve",
+        "title": "Preserve"
+    },
+    {
+        "type": "dishType",
+        "id": "Salad",
+        "title": "Salad"
+    },
+    {
+        "type": "dishType",
+        "id": "Sandwiches",
+        "title": "Sandwiches"
+    },
+    {
+        "type": "dishType",
+        "id": "Soup",
+        "title": "Soup"
+    },
+    {
+        "type": "dishType",
+        "id": "Starter",
+        "title": "Starter"
+    },
+    {
+        "type": "cuisineType",
+        "id": "American",
+        "title": "American"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Asian",
+        "title": "Asian"
+    },
+    {
+        "type": "cuisineType",
+        "id": "British",
+        "title": "British"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Caribbean",
+        "title": "Caribbean"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Chinese",
+        "title": "Chinese"
+    },
+    {
+        "type": "cuisineType",
+        "id": "French",
+        "title": "French"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Indian",
+        "title": "Indian"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Italian",
+        "title": "Italian"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Japanese",
+        "title": "Japanese"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Kosher",
+        "title": "Kosher"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Mediterranean",
+        "title": "Mediterranean"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Mexican",
+        "title": "Mexican"
+    },
+    {
+        "type": "cuisineType",
+        "id": "Nordic",
+        "title": "Nordic"
+    }
+]

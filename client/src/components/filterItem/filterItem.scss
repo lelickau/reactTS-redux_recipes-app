@@ -1,0 +1,37 @@
+@import '../../styles/variables.scss';
+
+.filter-item {
+    &__descr {
+        @extend %placeholder-fonts;
+        font-size: 16px;
+        padding-left: 30px;
+    }
+
+    &__box-title {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__ico-descr {
+        cursor: pointer;
+        margin-top: 10px;
+        font-size: 15px;
+        line-height: 15px;
+        color: $placeholder-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border: 1px solid $placeholder-color;
+        border-radius: 11px;
+    }
+
+    .hidden {
+        font-size: 0;
+        opacity: 0;
+        height: 0;
+        margin: 0;
+        padding: 0;
+    }
+}
