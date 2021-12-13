@@ -54,3 +54,9 @@ input::-webkit-inner-spin-button {
 .container {
     padding-left: 123px;
 }
+
+@media (max-width: 910px) {
+    .container {
+        padding-left: 0;
+    }
+}

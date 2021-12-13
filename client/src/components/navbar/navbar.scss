@@ -8,6 +8,7 @@
     left: 0;
     background-color: $box-color;
     box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.04);
+    z-index: 200;
 
     &__item {
         width: 100%;
@@ -49,5 +50,28 @@
     &__link--active {
         background-color: #F8F8F8;
     }
+
+}
+
+@media (max-width: 910px) {
+    .header {
+        width: 100vw;
+        height: 123px;
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        &__list {
+            flex-direction: row;
+            align-items: stretch;
+            align-content: stretch;
+        }
+
+        &__link {
+            height: 100%;
+        }
+    }
+
 
 }

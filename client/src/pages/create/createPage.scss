@@ -1,0 +1,147 @@
+@import '../../styles/variables.scss';
+
+.create {
+    max-width: 995px;
+    padding: 70px 122px 38px;
+    &__form {
+        @extend %box-styles;
+        padding: 44px 30px;
+    }
+
+    &__form-title {
+        @extend %accent-title-fonts;
+        margin-bottom: 25px;
+    }
+
+    &__name {
+        display: block;
+        @extend %title-fonts;
+        font-weight: 500;
+        margin-bottom: 25px;
+    }
+
+    .main-input {
+        margin-top: 17px;
+    }
+
+    &__form-required {
+        color: #FF988A;
+    }
+
+    &__ingredients {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 25px;
+    }
+
+    &__instructions {
+        margin-bottom: 25px;
+    }
+
+    &__instructions-content {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    &__instructions-title {
+        @extend %title-fonts;
+        font-weight: 500;
+        margin-bottom: 22px;
+    }
+
+    &__instructions-items {
+        width: 100%;
+        margin-left: 19px;
+    }
+
+    &__instructions-add {
+        width: 40px;
+    }
+
+    &__add-btn {
+        margin-bottom: 10px;
+    }
+
+    &__info {
+        display: flex;
+    }
+
+    &__info-item {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 25px;
+
+        .main-input {
+            width: 70px;
+        }
+    }
+
+    &__info-item + &__info-item {
+        margin-left: 68px;
+    }
+
+    &__info-notes {
+        width: 100%;
+        margin-bottom: 50px;
+
+        .textarea {
+            margin-top: 19px;
+        }
+    }
+
+    .main-btn {
+        width: 220px;
+    }
+
+}
+
+@media (max-width: 910px) {
+    .create {
+        padding-bottom: 143px;
+    }
+}
+
+@media (max-width: 885px)  {
+    .create {
+        padding: 30px 30px 143px;
+    }
+}
+@media (max-width: 585px)  {
+    .create {
+        &__ingredients,
+        &__instructions-content {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column-reverse;
+        }
+
+        &__instructions-items {
+            margin-left: 0;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .create {
+        &__ingredients-items {
+            width: 100%;
+        }
+
+        &__info {
+            flex-direction: column;
+        }
+
+        &__info-item + &__info-item {
+            margin-left: 0;
+        }
+    }
+}
+
+
+@media (max-width: 415px) {
+    .create {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+    }
+}
