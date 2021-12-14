@@ -16,7 +16,7 @@ const CreatePage:FC = () => {
                     Name of the dish <span className="create__form-required">*</span>
                     <InputElem
                         placeholder="pizza"
-                        name=""
+                        name="label"
                         type="text"
                     />
                 </label>
@@ -37,9 +37,9 @@ const CreatePage:FC = () => {
                             <ButtonAdd/>
                         </div>
                         <div className="create__instructions-items">
-                            <TextareaElem placeholderText='step 1'/>
-                            <TextareaElem placeholderText='step 1'/>
-                            <TextareaElem placeholderText='step 1'/>
+                            <TextareaElem placeholderText='step 1' name="step1"/>
+                            <TextareaElem placeholderText='step 2' name="step2"/>
+                            <TextareaElem placeholderText='step 3' name="step3"/>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@ const CreatePage:FC = () => {
                         Ready in (minutes)
                         <InputElem
                             placeholder="60"
-                            name=""
+                            name="ready"
                             type="number"
                         />
                     </label>
@@ -56,7 +56,7 @@ const CreatePage:FC = () => {
                         Servings
                         <InputElem
                             placeholder="4"
-                            name=""
+                            name="servings"
                             type="number"
                         />
                     </label>
@@ -64,7 +64,7 @@ const CreatePage:FC = () => {
                 <div className="create__info">
                     <label className="create__info-notes">
                         Chef's Notes
-                        <TextareaElem placeholderText='notes about the recipe '/>
+                        <TextareaElem placeholderText='notes about the recipe ' name='notes'/>
                     </label>
                 </div>
                 <ButtonElem>Create</ButtonElem>

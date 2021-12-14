@@ -4,11 +4,12 @@ import './textarea.scss';
 
 interface TextareaElemProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     placeholderText: string;
+    name?: string;
 }
 
-const TextareaElem: FC<TextareaElemProps> = ({placeholderText, ...rest}) => {
+const TextareaElem: FC<TextareaElemProps> = ({placeholderText, name, ...rest}) => {
     return (
-        <textarea className="textarea" placeholder={placeholderText} {...rest}></textarea>
+        <textarea className="textarea" name={name} placeholder={placeholderText} {...rest}></textarea>
     );
 };
 

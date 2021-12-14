@@ -7,14 +7,19 @@ import FiltersList from '../../components/filtersList/FiltersList';
 
 const SearchPage:FC = () => {
 
-    const filters = [
+    type Filters = {
+        title: string;
+        type: string;
+        descr: boolean;
+    }
+
+    const filters: Array<Filters> = [
         {title: 'Diet', type: "diet", descr: true},
         {title: 'Meal types', type: "mealType", descr: false},
         {title: 'Health', type: "health", descr: true},
         {title: 'Dish types', type: "dishType", descr: false},
         {title: 'Cuisine types', type: "cuisineType", descr: false},
     ]
-
 
     return (
         <form className="search">

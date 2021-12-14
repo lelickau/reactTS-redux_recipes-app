@@ -10,7 +10,7 @@ const IngredientItem = () => {
             Ingredient <span className="ingredient__required">*</span>
                 <InputElem
                     placeholder="pizza"
-                    name=""
+                    name="food"
                     type="text"
                 />
             </label>
@@ -18,13 +18,13 @@ const IngredientItem = () => {
             Quantity <span className="ingredient__required">*</span>
                 <InputElem
                     placeholder="0.5"
-                    name=""
+                    name="quantity"
                     type="number"
                 />
             </label>
             <div className="ingredient__item">
                 <h3 className="ingredient__item-title">Measure <span className="ingredient__required">*</span></h3>
-                <select className="ingredient__item-select">
+                <select name='measure' className="ingredient__item-select">
                     <option value="grams" className="ingredient__measure">grams</option>
                     <option value="teaspoon" className="ingredient__measure">teaspoon</option>
                     <option value="cups" className="ingredient__measure">cups</option>

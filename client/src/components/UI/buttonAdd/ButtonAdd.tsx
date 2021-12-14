@@ -4,8 +4,8 @@ import './buttonAdd.scss';
 
 type ButtonAddProps =  ButtonHTMLAttributes<HTMLButtonElement>
 
-const ButtonAdd: FC<ButtonAddProps> = ({...rest}) => {
-    return <button className="btn-add" {...rest}></button>
+const ButtonAdd: FC<ButtonAddProps> = ({children, ...rest}) => {
+    return <button className="btn-add" {...rest}>{children}</button>
 };
 
 export default ButtonAdd;
