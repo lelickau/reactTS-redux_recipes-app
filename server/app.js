@@ -1,19 +1,23 @@
 const express = require('express');
 const config = require('config');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
 const errorsMiddleware = require('./middleware/error-middelware');
 
 
-const PORT = process.env.PORT || config.get('port');
+const PORT = config.get('PORT') || config.get('port');
 const app = express();
 
 
 app.use(express.json({extended: true}));
 app.use(cookieParser());
+app.use(cors({
+    credentials: true,
+    origin: config.get('clientUrl')
+}));
 app.use('/api', router);
-
 app.use(errorsMiddleware);
 
 
