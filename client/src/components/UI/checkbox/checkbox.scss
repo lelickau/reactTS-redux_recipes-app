@@ -11,7 +11,7 @@
 
 .checkbox__input:checked + .checkbox__label,
 .checkbox__input:not(:checked) + .checkbox__label {
-    @extend %text-fonts;
+    @include text-fonts;
     position: relative;
     display: inline-block;
     padding: 10px;

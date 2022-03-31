@@ -4,18 +4,18 @@
     max-width: 995px;
     padding: 70px 122px 38px;
     &__form {
-        @extend %box-styles;
+        @include box-styles;
         padding: 44px 30px;
     }
 
     &__form-title {
-        @extend %accent-title-fonts;
+        @include accent-title-fonts;
         margin-bottom: 25px;
     }
 
     &__name {
         display: block;
-        @extend %title-fonts;
+        @include title-fonts;
         font-weight: 500;
         margin-bottom: 25px;
     }
@@ -44,7 +44,7 @@
     }
 
     &__instructions-title {
-        @extend %title-fonts;
+        @include title-fonts;
         font-weight: 500;
         margin-bottom: 22px;
     }

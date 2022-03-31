@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import IngredientItem from '../../components/ingredientItem/IngredientItem';
+import CreateIngredientItem from '../../components/createIngredientItem/CreateIngredientItem';
 import ButtonElem from '../../components/UI/button/ButtonElem';
 import ButtonAdd from '../../components/UI/buttonAdd/ButtonAdd';
 import InputElem from '../../components/UI/input/InputElem';
@@ -25,9 +25,9 @@ const CreatePage:FC = () => {
                         <ButtonAdd/>
                     </div>
                     <div className="create__ingredients-items">
-                        <IngredientItem/>
-                        <IngredientItem/>
-                        <IngredientItem/>
+                        <CreateIngredientItem/>
+                        <CreateIngredientItem/>
+                        <CreateIngredientItem/>
                     </div>
                 </div>
                 <div className="create__instructions">

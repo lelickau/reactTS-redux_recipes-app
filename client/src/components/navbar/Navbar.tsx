@@ -1,19 +1,34 @@
-import React, {FC} from 'react';
+import React, {FC, MouseEvent} from 'react';
 import {NavLink} from 'react-router-dom';
+import { useHistory } from 'react-router';
+import { getAuth, signOut } from 'firebase/auth';
+import { IIsAuth } from 'models/IIsAuth';
+import { useAppDispatch } from 'hooks/reduxHooks';
+import { removeUser } from 'store/slices/userSlice';
 
-import './navbar.scss';
 import loginIco from '../../resources/ico/login.svg';
 import logoutIco from '../../resources/ico/logout.svg';
 import favsIco from '../../resources/ico/favs.svg';
 import searchIco from '../../resources/ico/search.svg';
 import createIco from '../../resources/ico/create.svg';
+import logo from '../../resources/ico/logo.svg';
+import './navbar.scss';
 
-const Sidebar:FC = () => {
+const Sidebar:FC<IIsAuth> = ({isAuth}) => {
+    const {push} = useHistory()
+    const dispatch = useAppDispatch()
 
-    let isAuth = true;
-    const logoutUser = () => {
-        isAuth = false;
-        console.log('logout');
+    const logoutUser = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        const auth = getAuth()
+        signOut(auth)
+            .then(() => {
+                dispatch(removeUser())
+                push('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     return (
@@ -21,7 +36,14 @@ const Sidebar:FC = () => {
             <nav className="header__nav">
                 <ul className="header__list">
                     <li className="header__item">
-                        {isAuth
+                        <NavLink to="/home" className="header__link"
+                        activeClassName="header__link--active">
+                            <img src={logo} alt="login" className="header__ico" />
+                            <span className="header__item-name">My Gusto</span>
+                        </NavLink>
+                    </li>
+                    <li className="header__item">
+                        {!isAuth
                             ?
                         <NavLink to="/login" className="header__link" activeClassName="header__link--active">
                             <img src={loginIco} alt="login" className="header__ico" />

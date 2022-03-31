@@ -11,6 +11,6 @@
 
     &::placeholder {
         font-family: 'Roboto', sans-serif;
-        @extend %placeholder-fonts;
+        @include placeholder-fonts;
     }
 }

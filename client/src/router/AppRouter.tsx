@@ -1,17 +1,28 @@
-import React from 'react';
+import { IIsAuth } from 'models/IIsAuth';
+import React, { FC } from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import { publicRoutes, RouteNames} from "./index";
+import { publicRoutes, privateRoutes, RouteNames} from "./index";
 
-const AppRouter = () => {
+const AppRouter: FC<IIsAuth> = ({isAuth}) => {
     return (
         <Switch>
-        {publicRoutes.map(route =>
-            <Route path={route.path}
-                exact={route.exact}
-                component={route.component}
-                key={route.path}
-            />
-        )}
+            {isAuth ?
+                privateRoutes.map(route =>
+                    <Route path={route.path}
+                        exact={route.exact}
+                        component={route.component}
+                        key={route.path}
+                    />
+                )
+                :
+                publicRoutes.map(route =>
+                    <Route path={route.path}
+                        exact={route.exact}
+                        component={route.component}
+                        key={route.path}
+                    />
+                )
+            }
         <Redirect to={RouteNames.SEARCH}/>
         </Switch>
     )

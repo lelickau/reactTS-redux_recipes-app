@@ -1,79 +1,101 @@
-import React, { ChangeEvent, FC, FormEvent, MouseEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import ButtonElem from '../../components/UI/button/ButtonElem';
-import InputElem from '../../components/UI/input/InputElem';
-import { login } from '../../redux/actions/user';
+import Form from 'components/authForm/Form';
+import React, { FC, FormEvent, useState } from 'react';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { setUser } from 'store/slices/userSlice';
+import { useHistory } from 'react-router';
+import { useAppDispatch } from 'hooks/reduxHooks';
 
 import './authPage.scss';
 
 const AuthPage:FC = () => {
-    const dispatch = useDispatch();
-    interface IUser {
-        username: string;
-        email: string;
-        password: string;
-    }
+    const dispatch = useAppDispatch()
+    const {push} = useHistory()
 
-    const [user, setUser] = useState<IUser>({
-        username: '',
-        email: '',
-        password: ''
+    const [form, setForm] = useState(true)
+    const [formText, setFormText] = useState({
+        question: 'New user?',
+        btnTitle: 'Create an account'
     })
 
-    const preventDef = (e: FormEvent<HTMLFormElement>) => {
+    const preventDefForm = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     }
 
-    const clickHandler = (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        dispatch(login(user))
+    const clickHandler = (user:{email: string, password: string, username?:string}) => {
+        if (form) {
+            clickHandlerLogin(user.email, user.password)
+        } else {
+            clickHandlerSignup(user.email, user.password)
+        }
     }
 
-    const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setUser({...user, [e.target.name]: e.target.value})
+    const clickHandlerLogin = (email: string, password: string) => {
+        const auth = getAuth()
+        signInWithEmailAndPassword(auth, email, password)
+        .then(({user}) => {
+            console.log(user)
+            dispatch(setUser({
+                email: user.email,
+                token: user.refreshToken,
+                id: user.uid,
+            }))
+            push('/')
+        })
+        .catch(console.error)
+    }
+
+    const clickHandlerSignup = (email: string, password: string) => {
+        const auth = getAuth()
+        createUserWithEmailAndPassword(auth, email, password)
+        .then(({user}) => {
+            console.log(user)
+            dispatch(setUser({
+                email: user.email,
+                token: user.refreshToken,
+                id: user.uid,
+            }))
+            push('/')
+        })
+        .catch(console.error)
+    }
+
+    const changeForm = () => {
+        setForm(!form)
+        if (form) {
+            setFormText({
+                question: 'Already have an account?',
+                btnTitle: 'Sign in'
+            })
+        } else {
+            setFormText({
+                question: 'New user?',
+                btnTitle: 'Create an account'
+            })
+        }
     }
 
     return (
         <article className="auth">
-            <form
-                className="auth__form"
-                onSubmit={preventDef}
-            >
-                <h1 className="auth__title">Sign in</h1>
-                <div className="auth__input-box">
-                    <InputElem
-                        placeholder="Email"
-                        name="username"
-                        type="username"
-                        onChange={changeHandler}
-                        value={user.username}
+            <div className="auth__box">
+                <form
+                    className="auth__form"
+                    onSubmit={preventDefForm}
+                >
+                    <Form
+                        title={form ? 'Sign in' : 'Create'}
+                        handleClick={clickHandler}
+                        isLoginForm={form}
                     />
-                    <InputElem
-                        placeholder="Email"
-                        name="email"
-                        type="email"
-                        onChange={changeHandler}
-                        value={user.email}
-                    />
-                </div>
-                <div className="auth__input-box">
-                    <InputElem
-                        placeholder="Password"
-                        name="password"
-                        type="password"
-                        onChange={changeHandler}
-                        value={user.password}
-                    />
-                </div>
-                <div className="auth__btn-box">
-                    <ButtonElem onClick={clickHandler}>Log in</ButtonElem>
-                </div>
+                </form>
                 <div className="auth__change-auth">
-                    <span className="auth__new-user">New user?
-                        <span className="auth__create-btn">Create an account</span>
+                    <span className="auth__new-user">{formText.question}
+                        <button
+                            className="auth__create-btn"
+                            onClick={changeForm}
+                        >{formText.btnTitle}</button>
                     </span>
                 </div>
-            </form>
+            </div>
         </article>
     );
 };

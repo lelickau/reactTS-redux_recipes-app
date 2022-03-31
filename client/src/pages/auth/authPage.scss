@@ -6,8 +6,7 @@
     align-items: center;
     justify-content: center;
 
-
-    &__form {
+    &__box {
         position: relative;
         padding: 37px;
         padding-left: 60px;
@@ -21,22 +20,6 @@
         border-radius: 10px;
     }
 
-    &__title {
-        @extend %accent-title-fonts;
-        text-align: center;
-        margin-bottom: 27px;
-    }
-
-    &__input-box {
-        margin-bottom: 7%;
-    }
-
-    &__btn-box {
-        margin: 0 auto;
-        width: 30%;
-        min-width: 117px;
-    }
-
     &__change-auth {
         position: absolute;
         bottom: 9%;
@@ -45,16 +28,19 @@
     }
 
     &__create-btn {
-        @extend %accent-text-fonts;
+        background-color: transparent;
+        border: none;
+        @include accent-text-fonts;
         margin-left: 5px;
         cursor: pointer;
         text-decoration: underline;
+        font-weight: 700;
     }
 }
 
 @media (max-width: 1400px) {
     .auth {
-        &__form {
+        &__box {
             padding-left: 37px;
             padding-right: 37px;
         }
@@ -63,7 +49,7 @@
 
 @media (max-width: 1300px) {
     .auth {
-        &__form {
+        &__box {
 
             height: 374px;
         }

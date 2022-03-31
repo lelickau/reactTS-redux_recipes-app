@@ -1,82 +1,25 @@
 @import '../../styles/variables.scss';
 
 .ingredient {
-    display: flex;
-    margin-bottom: 10px;
+    position: relative;
+    padding: 5px 0 5px 26px;
+    text-transform: lowercase;
+    @include text-fonts;
 
-    &__item {
-        margin-left: 19px;
-        display: block;
-        @extend %title-fonts;
-        font-weight: 500;
-
-    }
-
-    &__item-title {
-        @extend %title-fonts;
-        font-weight: 500;
-    }
-
-    &__item-select {
-        margin-top: 17px;
-        width: 236px;
-        height: 42px;
-        border: 2px solid #f4f4f4;
-        border-radius: 10px;
-        padding-left: 18px;
-        font-family: 'Roboto', sans-serif;
-        @extend %placeholder-fonts;
-    }
-
-    &__required {
-        color: #FF988A;
+    &::after {
+        position: absolute;
+        content: '';
+        background-color: #41F0B6;
+        width: 15px;
+        height: 15px;
+        left: 0;
+        top: 7px;
+        border-radius: 50%;
     }
 }
 
 
 @media (max-width: 970px)  {
-    .ingredient{
-        &__item-select {
-            width: 160px;
-        }
-    }
-}
-
-@media (max-width: 585px)  {
-    .ingredient {
-        &__item:first-child {
-            margin-left: 0;
-        }
-
-        &__item-select {
-            width: 135px;
-        }
-    }
-}
-
-@media (max-width: 500px) {
-    .ingredient {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        flex-direction: column;
-        border-top: 1px solid rgb(228, 228, 228);
-
-        &:last-child {
-            border-bottom: 1px solid rgb(228, 228, 228);
-        }
-
-        &__item {
-            margin-left: 0;
-            margin-bottom: 10px;
-        }
-
-        &__item-select {
-            width: 100%;
-        }
-    }
 
 }
 
-@media (max-width: 415px) {
-    
-}

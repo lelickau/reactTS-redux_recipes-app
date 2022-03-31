@@ -2,7 +2,7 @@
 
 .filter-item {
     &__descr {
-        @extend %placeholder-fonts;
+        @include placeholder-fonts;
         font-size: 16px;
         padding-left: 30px;
     }

@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+
+.form {
+    &__title {
+        @include accent-title-fonts;
+        text-align: center;
+        margin-bottom: 27px;
+    }
+
+    &__input-box {
+        margin-bottom: 7%;
+    }
+}

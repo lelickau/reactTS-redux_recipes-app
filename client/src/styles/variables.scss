@@ -4,42 +4,112 @@ $text-color: #5C5C5C;
 $placeholder-color: #A1A1A1;
 $accent-color: #59B7B3;
 
-%title-fonts {
+@mixin title-fonts {
     color: $text-color;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
+
+    @media (min-width: 1100px) {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    @media (max-width: 1100px) {
+        font-size: 20px;
+        line-height: 23px;
+    }
 }
 
-%accent-title-fonts {
+@mixin accent-title-fonts {
     color: $accent-color;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
+
+    @media (min-width: 1100px) {
+        font-size: 22px;
+        line-height: 26px;
+    }
+
+    @media (max-width: 1100px) {
+        font-size: 20px;
+        line-height: 23px;
+    }
 }
 
-%text-fonts {
+@mixin subtitle-fonts {
     color: $text-color;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
+    font-weight: 700;
+
+    @media (min-width: 1100px) {
+        font-size: 20px;
+        line-height: 23px;
+    }
+
+    @media (max-width: 1100px) {
+        font-size: 18px;
+        line-height: 21px;
+    }
 }
 
-%accent-text-fonts {
+@mixin accent-subtitle-fonts {
     color: $accent-color;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
+    font-weight: 700;
+
+    @media (min-width: 1100px) {
+        font-size: 20px;
+        line-height: 23px;
+    }
+
+    @media (max-width: 1100px) {
+        font-size: 18px;
+        line-height: 21px;
+    }
 }
 
-%placeholder-fonts {
+@mixin text-fonts {
+    color: $text-color;
+    font-weight: 300;
+
+    @media (min-width: 1100px) {
+        font-size: 16px;
+        line-height: 21px;
+    }
+
+    @media (max-width: 1100px) {
+        font-size: 16px;
+        line-height: 18px;
+    }
+}
+
+@mixin accent-text-fonts {
+    color: $accent-color;
+    font-weight: 300;
+
+    @media (min-width: 1100px) {
+        font-size: 16px;
+        line-height: 21px;
+    }
+
+    @media (max-width: 1100px) {
+        font-size: 16px;
+        line-height: 18px;
+    }
+}
+
+@mixin placeholder-fonts {
     color: $placeholder-color;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
+    font-weight: 300;
+
+    @media (min-width: 1100px) {
+        font-size: 16px;
+        line-height: 21px;
+    }
+
+    @media (max-width: 1100px) {
+        font-size: 16px;
+        line-height: 21px;
+    }
 }
 
-%box-styles {
+@mixin box-styles {
     box-shadow: 0px 0px 18px rgba(0, 0, 0, 0.04);
     border-radius: 10px;
     background-color: $box-color;

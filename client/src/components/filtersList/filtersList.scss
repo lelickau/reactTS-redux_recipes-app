@@ -10,7 +10,7 @@
         padding: 7px 5px;
         padding-left: 15px;
         margin-bottom: 4px;
-        @extend %title-fonts;
+        @include title-fonts;
     }
 
     &__items {

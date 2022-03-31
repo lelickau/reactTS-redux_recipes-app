@@ -1,38 +1,15 @@
-import React from 'react';
-import InputElem from '../UI/input/InputElem';
+import React, { FC } from 'react';
+import { IIngredients } from 'models/IRecipe'
 
 import './ingredientItem.scss';
+interface IngredientItemProps {
+    ingredient: IIngredients
+}
 
-const IngredientItem = () => {
+const IngredientItem: FC<IngredientItemProps> = ({ingredient}) => {
     return (
         <div className="ingredient">
-            <label className="ingredient__item">
-            Ingredient <span className="ingredient__required">*</span>
-                <InputElem
-                    placeholder="pizza"
-                    name="food"
-                    type="text"
-                />
-            </label>
-            <label className="ingredient__item">
-            Quantity <span className="ingredient__required">*</span>
-                <InputElem
-                    placeholder="0.5"
-                    name="quantity"
-                    type="number"
-                />
-            </label>
-            <div className="ingredient__item">
-                <h3 className="ingredient__item-title">Measure <span className="ingredient__required">*</span></h3>
-                <select name='measure' className="ingredient__item-select">
-                    <option value="grams" className="ingredient__measure">grams</option>
-                    <option value="teaspoon" className="ingredient__measure">teaspoon</option>
-                    <option value="cups" className="ingredient__measure">cups</option>
-                    <option value="ounce" className="ingredient__measure">ounce</option>
-                    <option value="pinch" className="ingredient__measure">pinch</option>
-                    <option value="tablespoon" className="ingredient__measure">tablespoon</option>
-                </select>
-            </div>
+            {ingredient.food} ({ingredient.weight}g)
         </div>
     );
 };
