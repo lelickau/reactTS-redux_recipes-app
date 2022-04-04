@@ -37,4 +37,6 @@ export interface IRecipe {
         };
     };
     totalWeight: number;
+    favorite?: boolean;
+    userId?: string | null;
 }

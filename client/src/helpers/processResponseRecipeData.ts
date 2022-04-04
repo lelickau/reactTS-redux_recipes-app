@@ -50,7 +50,8 @@ export const processResponseRecipeData = (array: any[]): any[]  => {
             image: item.recipe.image,
             totalDaily: totalDaily,
             totalNutrients: totalNutrients,
-            totalWeight: item.recipe.totalWeight.toFixed(0)
+            totalWeight: item.recipe.totalWeight.toFixed(0),
+            favorite: false
         }
     })
 

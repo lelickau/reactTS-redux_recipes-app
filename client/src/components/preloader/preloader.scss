@@ -3,9 +3,13 @@
 .preloader {
     position: absolute;
     z-index: 1000;
-    display: flex;
     width: 100vw;
     height: 100vh;
+}
+
+.preloader,
+.local-preloader {
+    display: flex;
     justify-content: center;
     align-items: center;
     background: $main-bg;

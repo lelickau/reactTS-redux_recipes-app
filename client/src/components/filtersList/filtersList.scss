@@ -18,6 +18,8 @@
     }
 
     .hidden {
+        position: absolute;
+        top: -10000px;
         visibility: hidden;
         height: 0;
         font-size: 0;

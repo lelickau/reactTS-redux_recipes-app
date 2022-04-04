@@ -1,8 +1,11 @@
 import ButtonElem from 'components/UI/button/ButtonElem';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 import { IRecipe } from 'models/IRecipe';
 import React, { FC } from 'react';
 
 import favBtn from 'resources/ico/favs-btn.svg'
+import { addFavoriteRecipe } from 'store/slices/favoritesSlice';
+import { idText } from 'typescript';
 import './recipeItem.scss'
 
 interface RecipesProps {
@@ -10,7 +13,16 @@ interface RecipesProps {
 }
 
 const RecipeItem:FC<RecipesProps> = ({recipe}) => {
-    console.log(recipe);
+    const dispatch = useAppDispatch()
+    const {id} = useAppSelector(state => state.user)
+
+    const addFavs = () => {
+        dispatch(addFavoriteRecipe({
+            ...recipe,
+            userId: id
+        }))
+    }
+    //console.log(recipe);
     return (
         <aside className="recipe">
             <h2 className="recipe__title title">{recipe.label}</h2>
@@ -41,7 +53,9 @@ const RecipeItem:FC<RecipesProps> = ({recipe}) => {
                         </div>
                     </div>
                     <div className="recipe__btns">
-                        <button className="recipe__favorite-btn">
+                        <button
+                            onClick={addFavs}
+                            className="recipe__favorite-btn">
                             <img className="recipe__favorite-img" src={favBtn} alt="fav" />
                         </button>
                         <ButtonElem>More</ButtonElem>

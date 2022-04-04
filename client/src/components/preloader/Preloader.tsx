@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import './preloader.scss'
 
-const Preloader = () => {
+interface PreloaderProps {
+    isLocal: boolean;
+}
+
+const Preloader:FC<PreloaderProps> = ({isLocal}) => {
     return (
-        <div className="preloader">
+        <div className={isLocal ? "local-preloader" : "preloader"}>
             <div className="preloader__dot"></div>
             <div className="preloader__dot"></div>
             <div className="preloader__dot"></div>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, MouseEvent, useState } from 'react'
+import React, { ChangeEvent, FC, MouseEvent, useEffect, useState } from 'react'
 import InputElem from '../../components/UI/input/InputElem'
 import ButtonElem from '../../components/UI/button/ButtonElem'
 import FiltersList from '../../components/filtersList/FiltersList'
@@ -7,10 +7,11 @@ import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks'
 
 import './searchPage.scss'
 import { nextSearchRecipes, searchRecipes } from 'store/slices/recipesSlice'
+import Preloader from 'components/preloader/Preloader'
 
 const SearchPage:FC = () => {
     const dispatch  = useAppDispatch()
-    const {recipes, error, nextPage} = useAppSelector(state => state.recipes)
+    const {recipes, error, nextPage, status} = useAppSelector(state => state.recipes)
 
     const [activeFilters, setActiveFilters] = useState(false)
     const openFilters = () => {
@@ -118,11 +119,11 @@ const SearchPage:FC = () => {
             </div>
         </form>
         <div className="search__content">
+        {status === 'loading' && <Preloader isLocal={true}/>}
         {
-            recipes?.length ?
-            recipes.map((recipe, index) => <RecipeItem key={index} recipe={recipe} />)
-            :
-            error
+            recipes?.length
+            ? recipes.map((recipe, index) => <RecipeItem key={index} recipe={recipe} />)
+            : error
         }
         {
             nextPage &&
@@ -131,9 +132,7 @@ const SearchPage:FC = () => {
                 onClick={fetchMoreRecipes}
             >Load more</div>
         }
-
         </div>
-
     </section>
     );
 };

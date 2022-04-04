@@ -2,8 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import Navbar from './components/navbar/Navbar'
 import AppRouter from './router/AppRouter'
 import { initializeApp } from "firebase/app"
-import { getDatabase } from "firebase/database"
-import { firebaseConfig } from 'firebase-config'
+import { db, firebaseConfig } from 'firebase-config'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useAuth } from 'hooks/useAuth'
 import { useAppDispatch } from 'hooks/reduxHooks'
@@ -11,16 +10,24 @@ import { setUser } from 'store/slices/userSlice'
 import Preloader from 'components/preloader/Preloader'
 import {useAuthState} from 'react-firebase-hooks/auth'
 
+//import { getDatabase, ref, set, onValue } from "firebase/database"
+import { getFirestore, collection, getDocs } from "firebase/firestore"
+
 import './styles/style.scss'
+import { getFavoritesRecipes } from 'store/slices/favoritesSlice'
 
 const App:FC = () => {
+    const dispatch = useAppDispatch()
     const [isAuth, setIsAuth] = useState(false)
 
-    const dispatch = useAppDispatch()
-    const app = initializeApp(firebaseConfig)
-    //const database = getDatabase(app)
+    //const app = initializeApp(firebaseConfig)
     const auth = getAuth()
     const [userData, loading, error] = useAuthState(auth)
+
+//db
+
+// read
+
     //
     //const user = useAuth()
     //console.log(user)
@@ -34,6 +41,7 @@ const App:FC = () => {
                 id: user.uid,
             }))
             setIsAuth(true)
+            dispatch(getFavoritesRecipes())
             } else {
             dispatch(setUser({
                 email: null,
@@ -43,10 +51,11 @@ const App:FC = () => {
             setIsAuth(false)
             }
         })
+
     }, [auth, dispatch])
 
     if (loading) {
-        return <Preloader/>
+        return <Preloader isLocal={false}/>
     }
 
     return (
