@@ -85,6 +85,10 @@ input::-webkit-inner-spin-button {
     @include title-fonts;
 }
 
+.hidden {
+    display: none;
+}
+
 @media (max-width: 1000px) {
     .container {
         padding-left: 0;

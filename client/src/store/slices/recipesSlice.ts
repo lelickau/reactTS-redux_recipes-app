@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import { processResponseRecipeData } from "helpers/processResponseRecipeData";
 import { IQuery } from "models/IQuery";
+import { IRecipeFetch, IRecipeInStore } from "models/IRecipe";
+import { AppDispatch, RootState } from "store";
 
 interface InitialStateRecipes {
     recipes: any[];
@@ -11,16 +13,17 @@ interface InitialStateRecipes {
 }
 
 // 'next page'
-export const nextSearchRecipes = createAsyncThunk(
+export const nextSearchRecipes = createAsyncThunk<string, string, {state: RootState, dispatch: AppDispatch}>(
     'recipes/nextSearchRecipes',
-    async (link: string, {rejectWithValue, dispatch}) => {
+    async (link, {rejectWithValue, dispatch, getState}) => {
         try {
             const response = await axios.get(link)
-            console.log(response.data)
             if (response.data.count === 0) {
                 return null
             }
-            dispatch(addNextPageRecipes(processResponseRecipeData(response.data.hits)))
+
+            const {favorites} = getState().favorites
+            dispatch(addNextPageRecipes(processResponseRecipeData(response.data.hits, favorites)))
             return response.data._links.next.href
 
         } catch (e) {
@@ -31,19 +34,22 @@ export const nextSearchRecipes = createAsyncThunk(
 )
 
 // get recipes from the server
-export const searchRecipes = createAsyncThunk(
+export const searchRecipes = createAsyncThunk<IRecipeFetch[] | null, IQuery, {state: RootState, dispatch: AppDispatch}>(
     'recipes/searchRecipes',
-    async (query: IQuery, {rejectWithValue}) => {
+    async (query, {rejectWithValue, dispatch, getState}) => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_RECIPES_APP_URL}?type=public&q=${query.recipeName}&app_id=${process.env.REACT_APP_RECIPES_APP_ID}&app_key=${process.env.REACT_APP_RECIPES_APP_KEY}`
+                `${process.env.REACT_APP_RECIPES_APP_URL}?type=public&q=${query.recipeName}&app_id=${process.env.REACT_APP_RECIPES_APP_ID}&app_key=${process.env.REACT_APP_RECIPES_APP_KEY}${query.numOfIngr}${query.filters}`
             )
-            console.log(response.data)
+            console.log(response.data.hits)
             if (response.data.count === 0) {
                 return null
             }
+            dispatch(addLinkNextPage(response.data._links.next.href))
 
-            return {data: processResponseRecipeData(response.data.hits), next: response.data._links.next.href}
+            const {favorites} = getState().favorites
+
+            return processResponseRecipeData(response.data.hits, favorites)
 
         } catch (e) {
             console.log(e)
@@ -77,7 +83,17 @@ const recipesSlice = createSlice({
             action.payload.forEach((item:{}) => {
                 state.recipes.push(item)
             })
-        }
+        },
+        addLinkNextPage(state, action) {
+            state.nextPage = action.payload
+        },
+        changeFavs(state, action) {
+            state.recipes.map((item: IRecipeInStore) => {
+                if (item.recipeId === action.payload) {
+                    item.favorite = !item.favorite
+                }
+            })
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -85,8 +101,7 @@ const recipesSlice = createSlice({
         .addCase(searchRecipes.fulfilled, (state, action) => {
             state.status = 'resolve'
             if (action.payload) {
-                state.recipes = action.payload.data
-                state.nextPage = action.payload.next
+                state.recipes = action.payload
             } else {
                 state.error = 'Not Found'
             }
@@ -102,5 +117,5 @@ const recipesSlice = createSlice({
     }
 })
 
-const {addNextPageRecipes} = recipesSlice.actions
+export const { addNextPageRecipes, addLinkNextPage, changeFavs} = recipesSlice.actions
 export default recipesSlice.reducer

@@ -1,0 +1,27 @@
+@import '../../styles/variables.scss';
+
+.recipe-descr {
+    &__title {
+        margin-bottom: 27px;
+    }
+
+    &__total {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    &__total-ico {
+        width: 25px;
+    }
+
+    &__total-count {
+        margin-left: 15px;
+        @include subtitle-fonts;
+    }
+
+    &__source {
+        @include accent-subtitle-fonts;
+        margin-left: 15px;
+        display: inline-block;
+    }
+}

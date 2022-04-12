@@ -1,0 +1,219 @@
+@import '../../styles/variables.scss';
+
+.dish {
+    padding: 30px;
+
+    &__control {
+        @include box-styles;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__main {
+        margin-top: 30px;
+        margin-bottom: 60px;
+        display: grid;
+        gap: 20px;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 300px;
+        grid-template-areas:
+        "A A B"
+        "C D B";
+    }
+
+    &__header {
+        grid-area: A;
+        align-self: start;
+    }
+
+    &__nutrients {
+        grid-area: B;
+        align-self: start;
+    }
+
+    &__ingredients {
+        grid-area: C;
+        align-self: start;
+    }
+
+    &__health {
+        grid-area: D;
+        align-self: start;
+    }
+
+    &__back-link {
+        height: 42px;
+        cursor: pointer;
+        padding: 10px;
+        @include box-styles;
+        background-color: #F4F4F4;
+        border: none;
+        margin-right: 10px;
+    }
+
+    &__back-ico {
+        width: 25px;
+    }
+
+    &__header {
+        @include box-styles;
+        max-height: 300px;
+        display: flex;
+    }
+
+    &__img-box {
+        height: 300px;
+        width: 300px;
+        @include box-styles;
+    }
+
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    &__descr {
+        padding: 15px;
+    }
+
+    &__nutrients {
+        width: 410px;
+        @include box-styles;
+        padding: 25px;
+    }
+
+    &__nutrients-list {
+        border-radius: 10px;
+        border: 1px solid $placeholder-color;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__nutrients-item {
+        border-bottom: 1px solid $placeholder-color;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__nutrients-quantity {
+        width: 40%;
+        padding: 8px 15px;
+    }
+
+    &__nutrients-label {
+        border-right: 1px solid $placeholder-color;
+        width: 60%;
+        padding: 8px 15px;
+    }
+
+    &__ingredients {
+        @include box-styles;
+        padding: 25px;
+    }
+
+    &__ingredients-title {
+        margin-bottom: 15px;
+    }
+
+    &__ingredient-item + &__ingredient-item {
+        margin-top: 20px;
+    }
+
+    &__ingredient-item {
+        position: relative;
+        margin-left: 40px;
+        text-transform: capitalize;
+
+        &::before {
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 25px;
+            background-color: #FFAE1B;
+            left: -40px;
+            border-radius: 50%;
+        }
+    }
+
+    &__health {
+        width: fit-content;
+        @include box-styles;
+        padding: 25px 25px 15px 25px;
+    }
+}
+
+@media (max-width: 1350px) {
+    .dish {
+        &__main {
+            grid-template-areas:
+            "A A A"
+            "C D B";
+        }
+    }
+}
+@media (max-width: 1150px) {
+    .dish {
+        &__main {
+            grid-template-areas:
+            "A A A"
+            "C C D"
+            "B B D";
+        }
+        &__nutrients {
+            width: auto;
+        }
+    }
+}
+@media (max-width: 870px) {
+    .dish {
+        &__header {
+            flex-direction: column;
+            max-height: 100%;
+        }
+        &__main {
+            grid-template-rows: auto;
+            grid-template-areas:
+            "A A A"
+            "C C C"
+            "B B B"
+            "D D D";
+        }
+        &__img-box {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            
+            &::before {
+                content: '';
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.349);
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+        }
+
+        &__img {
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 10px;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .dish {
+        padding: 10px;
+        &__img-box {
+            height: 150px;
+        }
+    }
+}

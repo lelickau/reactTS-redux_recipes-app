@@ -7,7 +7,6 @@
         position: relative;
         display: flex;
         align-items: flex-start;
-
     }
 
     &__item {
@@ -68,7 +67,7 @@
         color: $text-color;
 
         .main-input {
-            width: 56px;
+            width: 120px;
             padding: 0 14px;
             margin-bottom: 4px;
             text-align: center;
@@ -79,14 +78,6 @@
             :-ms-input-placeholder {
                 text-align: center;
             }
-        }
-
-        &::after {
-            position: absolute;
-            content: "-";
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
         }
     }
 
@@ -99,6 +90,8 @@
 
     &__content {
         width: 74%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
     }
 
     &__filters-ico-btn {
@@ -186,15 +179,25 @@
         border-radius: 10px;
         padding: 15px;
         cursor: pointer;
+        margin: 0 auto;
     }
 
 }
 
 
+@media (max-width: 1700px) {
+    .search {
+        &__content {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}
+
 @media (max-width: 1400px) {
     .search {
         &__content {
             width: 70%;
+            grid-template-columns: repeat(2, 1fr);
         }
 
         .item-search {
@@ -225,6 +228,13 @@
     }
 }
 
+@media (max-width: 900px) {
+    .search {
+        &__content {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}
 @media (max-width: 850px) {
     .search {
 
@@ -263,6 +273,9 @@
 
 @media (max-width: 680px) {
     .search {
+        &__content {
+            grid-template-columns: repeat(2, 1fr);
+        }
         &__form {
             flex-direction: column;
         }
@@ -297,6 +310,14 @@
         &__content {
             width: 100%;
         }
+    }
+}
 
+@media (max-width: 550px) {
+    .search {
+        padding: 10px;
+        &__content {
+            grid-template-columns: repeat(1, 1fr);
+        }
     }
 }

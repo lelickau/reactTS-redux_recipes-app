@@ -1,68 +1,61 @@
+import RecipeDescription from 'components/recipeDescription/RecipeDescription';
 import ButtonElem from 'components/UI/button/ButtonElem';
+import ButtonFavs from 'components/UI/buttonFavs/ButtonFavs';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
-import { IRecipe } from 'models/IRecipe';
+import { IRecipeInStore } from 'models/IRecipe';
 import React, { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import favBtn from 'resources/ico/favs-btn.svg'
-import { addFavoriteRecipe } from 'store/slices/favoritesSlice';
-import { idText } from 'typescript';
+import { changeFavs } from 'store/slices/recipesSlice';
+import { addFavoriteRecipe, deleteFavoriteRecipe } from 'store/slices/favoritesSlice';
 import './recipeItem.scss'
 
 interface RecipesProps {
-    recipe: IRecipe
+    recipe: IRecipeInStore;
+    idRecipe: number;
 }
 
-const RecipeItem:FC<RecipesProps> = ({recipe}) => {
+const RecipeItem:FC<RecipesProps> = ({recipe, idRecipe}) => {
     const dispatch = useAppDispatch()
     const {id} = useAppSelector(state => state.user)
 
-    const addFavs = () => {
-        dispatch(addFavoriteRecipe({
-            ...recipe,
-            userId: id
-        }))
+    const changeFavorite = () => {
+        const recipeId = recipe.recipeId
+        if (recipe.favorite) {
+            dispatch(changeFavs(recipeId))
+            const favId = recipe.id
+            dispatch(deleteFavoriteRecipe(favId))
+        } else {
+            dispatch(addFavoriteRecipe({
+                ...recipe,
+                userId: id
+            }))
+            dispatch(changeFavs(recipeId))
+        }
     }
-    //console.log(recipe);
+
     return (
-        <aside className="recipe">
-            <h2 className="recipe__title title">{recipe.label}</h2>
+        <article className="recipe">
+            <div className="recipe__img-box">
+                <img className="recipe__img" src={recipe.image} alt={recipe.label}  />
+            </div>
             <div className="recipe__descr">
-                <div className="recipe__item">
-                    <div className="recipe__img-box">
-                        <img className="recipe__img" src={recipe.image} alt={recipe.label} />
-                    </div>
-                    <a className="recipe__source" href={recipe.url}>Source: "{recipe.source}"</a>
-                    <div className="recipe__tags">
-                        {
-                            recipe.cuisineType.map(tag => <span className="recipe__tag-item" key={tag}>{tag}</span>)
-                        }
-                        {
-                            recipe.mealType.map(tag => <span className="recipe__tag-item" key={tag}>{tag}</span>)
-                        }
-                    </div>
-                </div>
-                <div className="recipe__item recipe__item-total">
-                    <div className="recipe__total-box">
-                        <div className="recipe__total">
-                            <span className="recipe__total-title">Weight</span>
-                            <span className="recipe__total-count">{recipe.totalWeight}g</span>
-                        </div>
-                        <div className="recipe__total">
-                            <span className="recipe__total-title">Calories</span>
-                            <span className="recipe__total-count">{recipe.calories}Cal</span>
-                        </div>
-                    </div>
-                    <div className="recipe__btns">
-                        <button
-                            onClick={addFavs}
-                            className="recipe__favorite-btn">
-                            <img className="recipe__favorite-img" src={favBtn} alt="fav" />
-                        </button>
-                        <ButtonElem>More</ButtonElem>
-                    </div>
+                <RecipeDescription
+                    label={recipe.label}
+                    totalWeight={recipe.totalWeight}
+                    calories={recipe.calories}
+                    url={recipe.url}
+                    source={recipe.source}
+                    cuisineType={recipe.cuisineType}
+                    dishType={recipe.dishType}
+                    mealType={recipe.mealType}
+                />
+                <div className="recipe__btns">
+                    { id && <ButtonFavs active={recipe.favorite} addFavs={changeFavorite}/> }
+                    <NavLink to={`/search/${idRecipe}`}><ButtonElem>More</ButtonElem></NavLink>
                 </div>
             </div>
-        </aside>
+        </article>
     );
 };
 

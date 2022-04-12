@@ -1,0 +1,23 @@
+@import '../../styles/variables.scss';
+
+.favs {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+
+    &__item {
+        width: 50%;
+    }
+
+    &__title {
+        padding: 15px;
+        @include box-styles;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        height: 55px;
+    }
+    &__item + &__item  {
+        margin-left: 15px;
+    }
+}

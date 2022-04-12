@@ -1,20 +1,15 @@
 import React, { FC, useEffect, useState } from 'react'
 import Navbar from './components/navbar/Navbar'
 import AppRouter from './router/AppRouter'
-import { initializeApp } from "firebase/app"
-import { db, firebaseConfig } from 'firebase-config'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { useAuth } from 'hooks/useAuth'
 import { useAppDispatch } from 'hooks/reduxHooks'
 import { setUser } from 'store/slices/userSlice'
 import Preloader from 'components/preloader/Preloader'
 import {useAuthState} from 'react-firebase-hooks/auth'
 
-//import { getDatabase, ref, set, onValue } from "firebase/database"
-import { getFirestore, collection, getDocs } from "firebase/firestore"
-
 import './styles/style.scss'
 import { getFavoritesRecipes } from 'store/slices/favoritesSlice'
+import { getMyRecipes } from 'store/slices/myRecipesSlice'
 
 const App:FC = () => {
     const dispatch = useAppDispatch()
@@ -24,24 +19,18 @@ const App:FC = () => {
     const auth = getAuth()
     const [userData, loading, error] = useAuthState(auth)
 
-//db
 
-// read
-
-    //
-    //const user = useAuth()
-    //console.log(user)
-    //
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-            dispatch(setUser({
-                email: user.email,
-                token: user.refreshToken,
-                id: user.uid,
-            }))
-            setIsAuth(true)
-            dispatch(getFavoritesRecipes())
+                dispatch(setUser({
+                    email: user.email,
+                    token: user.refreshToken,
+                    id: user.uid,
+                }))
+                setIsAuth(true)
+                dispatch(getFavoritesRecipes(user.uid))
+                dispatch(getMyRecipes(user.uid))
             } else {
             dispatch(setUser({
                 email: null,

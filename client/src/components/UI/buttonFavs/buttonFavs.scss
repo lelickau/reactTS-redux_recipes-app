@@ -1,0 +1,11 @@
+@import '../../../styles/variables.scss';
+
+.favorite-btn {
+    height: 42px;
+    cursor: pointer;
+    padding: 10px;
+    @include box-styles;
+    background-color: #F4F4F4;
+    border: none;
+    margin-right: 10px;
+}

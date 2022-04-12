@@ -1,7 +1,8 @@
 @import '../../styles/variables.scss';
 
 .create {
-    max-width: 995px;
+    margin: 0 auto;
+    width: 85%;
     padding: 70px 122px 38px;
     &__form {
         @include box-styles;
@@ -95,19 +96,37 @@
 
 }
 
-@media (max-width: 910px) {
+
+
+@media (max-width: 1300px) {
     .create {
-        padding-bottom: 143px;
+        width: 95%;
     }
 }
 
-@media (max-width: 885px)  {
+@media (max-width: 1050px) {
     .create {
-        padding: 30px 30px 143px;
+        width: 100%;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 690px)  {
+    .create {
+        .create-ingredient {
+            flex-direction: column;
+        }
+
+        .create-ingredient__item {
+            margin-top: 15px;
+        }
     }
 }
 @media (max-width: 585px)  {
     .create {
+        .create-ingredient__item {
+            margin-left: 0;
+        }
         &__ingredients,
         &__instructions-content {
             display: flex;
@@ -143,5 +162,9 @@
         padding-left: 10px;
         padding-right: 10px;
         padding-top: 10px;
+
+        &__form {
+            padding: 20px 10px;
+        }
     }
 }

@@ -1,0 +1,17 @@
+@import '../../styles/variables.scss';
+
+.myrecipe {
+    position: relative;
+    @include box-styles;
+    margin-bottom: 10px;
+    padding: 30px;
+
+    &__title {
+        @include subtitle-fonts;
+        margin-bottom: 15px;
+    }
+
+    &__notes {
+        @include text-fonts;
+    }
+}

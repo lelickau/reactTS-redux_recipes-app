@@ -1,7 +1,11 @@
+export interface IImageData {
+    recipeId: string;
+    urlImg: string;
+}
+
 export interface IDigest {
-    daily: number;
+    quantity: number;
     label: string;
-    total: number;
     unit: string;
 }
 export interface IIngredients {
@@ -10,11 +14,15 @@ export interface IIngredients {
     weight: number;
 }
 
-export interface IRecipe {
+export interface ITotalNutrients {
+    totalNutrients: IDigest[]
+};
+
+export interface IRecipeFetch {
+    uri: string;
     label: string;
     calories: number;
     cuisineType: string[];
-    digest?: IDigest[];
     dishType: string[];
     healthLabels: string[];
     image: string;
@@ -22,13 +30,6 @@ export interface IRecipe {
     mealType: string[];
     source: string;
     url: string;
-    totalDaily: {
-        [key: string]: {
-            label: string;
-            quantity: number;
-            unit: string;
-        };
-    };
     totalNutrients: {
         [key: string]: {
             label: string;
@@ -37,6 +38,23 @@ export interface IRecipe {
         };
     };
     totalWeight: number;
-    favorite?: boolean;
-    userId?: string | null;
+}
+
+export interface IRecipeInStore {
+    label: string;
+    calories: number;
+    cuisineType: string[];
+    dishType: string[];
+    healthLabels: string[];
+    image: string;
+    ingredients: IIngredients[];
+    mealType: string[];
+    source: string;
+    url: string;
+    totalNutrients: IDigest[];
+    totalWeight: number;
+    favorite: boolean;
+    userId: string;
+    id: string;
+    recipeId: string;
 }
