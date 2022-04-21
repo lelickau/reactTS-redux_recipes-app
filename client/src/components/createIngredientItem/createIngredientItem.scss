@@ -3,6 +3,7 @@
 .create-ingredient {
     display: flex;
     margin-bottom: 10px;
+    align-items: flex-end;
 
     &__item {
         margin-left: 19px;
@@ -28,11 +29,14 @@
         @include placeholder-fonts;
     }
 
+    &__item-select.valid-error {
+        border: 3px solid $btn-color;
+    }
+
     &__required {
         color: #FF988A;
     }
 }
-
 
 @media (max-width: 970px)  {
     .ingredient{

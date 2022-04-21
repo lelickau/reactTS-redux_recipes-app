@@ -8,12 +8,12 @@ import { AppDispatch, RootState } from "store";
 interface InitialStateRecipes {
     recipes: any[];
     status: string | null;
-    error:  string | null | unknown;
+    error:  string | null | undefined;
     nextPage: string;
 }
 
 // 'next page'
-export const nextSearchRecipes = createAsyncThunk<string, string, {state: RootState, dispatch: AppDispatch}>(
+export const nextSearchRecipes = createAsyncThunk<string, string, {state: RootState, dispatch: AppDispatch, rejectValue: string}>(
     'recipes/nextSearchRecipes',
     async (link, {rejectWithValue, dispatch, getState}) => {
         try {
@@ -24,28 +24,35 @@ export const nextSearchRecipes = createAsyncThunk<string, string, {state: RootSt
 
             const {favorites} = getState().favorites
             dispatch(addNextPageRecipes(processResponseRecipeData(response.data.hits, favorites)))
-            return response.data._links.next.href
+
+            if (response.data._links?.next?.href) {
+                return response.data._links.next.href
+            } else {
+                return ''
+            }
 
         } catch (e) {
             console.log(e)
-            return rejectWithValue('Error')
+            return rejectWithValue('Sorry, No result founded.')
         }
     }
 )
 
 // get recipes from the server
-export const searchRecipes = createAsyncThunk<IRecipeFetch[] | null, IQuery, {state: RootState, dispatch: AppDispatch}>(
+export const searchRecipes = createAsyncThunk<IRecipeFetch[] | null, IQuery, {state: RootState, dispatch: AppDispatch, rejectValue: string}>(
     'recipes/searchRecipes',
     async (query, {rejectWithValue, dispatch, getState}) => {
         try {
             const response = await axios.get(
                 `${process.env.REACT_APP_RECIPES_APP_URL}?type=public&q=${query.recipeName}&app_id=${process.env.REACT_APP_RECIPES_APP_ID}&app_key=${process.env.REACT_APP_RECIPES_APP_KEY}${query.numOfIngr}${query.filters}`
             )
-            console.log(response.data.hits)
             if (response.data.count === 0) {
                 return null
             }
-            dispatch(addLinkNextPage(response.data._links.next.href))
+
+            if (response.data._links?.next?.href) {
+                dispatch(addLinkNextPage(response.data._links.next.href))
+            }
 
             const {favorites} = getState().favorites
 
@@ -53,7 +60,7 @@ export const searchRecipes = createAsyncThunk<IRecipeFetch[] | null, IQuery, {st
 
         } catch (e) {
             console.log(e)
-            return rejectWithValue('Error')
+            return rejectWithValue('Sorry, No result founded.')
         }
     }
 )
@@ -88,9 +95,11 @@ const recipesSlice = createSlice({
             state.nextPage = action.payload
         },
         changeFavs(state, action) {
-            state.recipes.map((item: IRecipeInStore) => {
+            state.recipes = state.recipes.map((item: IRecipeInStore) => {
                 if (item.recipeId === action.payload) {
-                    item.favorite = !item.favorite
+                    return {...item, favorite: !item.favorite}
+                } else {
+                    return {...item}
                 }
             })
         },
@@ -103,7 +112,9 @@ const recipesSlice = createSlice({
             if (action.payload) {
                 state.recipes = action.payload
             } else {
-                state.error = 'Not Found'
+                state.nextPage = ''
+                state.recipes = []
+                state.error = 'Sorry, No result founded.'
             }
         })
         .addCase(searchRecipes.rejected, setError)

@@ -8,6 +8,19 @@
     }
 
     &__input-box {
+        position: relative;
         margin-bottom: 7%;
+    }
+
+    &__show-pass {
+        position: absolute;
+        bottom: 9px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 420px) {
+    .form {
+
     }
 }

@@ -1,0 +1,204 @@
+@import '../../styles/variables.scss';
+
+.create {
+    &__form {
+        margin: 0 auto;
+        width: 85%;
+        @include box-styles;
+        padding: 44px 30px;
+    }
+
+    &__form-title {
+        @include accent-title-fonts;
+        margin-bottom: 25px;
+    }
+
+    &__name {
+        display: block;
+        @include title-fonts;
+        font-weight: 500;
+        margin-bottom: 25px;
+    }
+
+    .main-input {
+        margin-top: 17px;
+    }
+
+    &__form-required {
+        color: #FF988A;
+    }
+
+    &__ingredients {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 25px;
+    }
+
+    &__instructions {
+        margin-bottom: 25px;
+    }
+
+    &__instructions-content {
+        display: flex;
+        align-items: flex-end;
+    }
+
+    &__instructions-title {
+        @include title-fonts;
+        font-weight: 500;
+        margin-bottom: 22px;
+    }
+
+    &__instructions-items {
+        width: 100%;
+        margin-left: 19px;
+    }
+
+    &__instructions-add {
+        width: 40px;
+    }
+
+    &__add-btn {
+        margin-bottom: 10px;
+    }
+
+    &__info {
+        display: flex;
+    }
+
+    &__info-item {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 25px;
+
+        .main-input {
+            width: 70px;
+        }
+    }
+
+    &__info-item + &__info-item {
+        margin-left: 68px;
+    }
+
+    &__info-notes {
+        width: 100%;
+        margin-bottom: 50px;
+
+        .textarea {
+            margin-top: 19px;
+        }
+    }
+
+    &__instructions-item {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    &__delete-btn {
+        margin-bottom: 7px;
+        cursor: pointer;
+        position: relative;
+        min-width: 25px;
+        height: 25px;
+        &::after {
+            top: 50%;
+            transform: rotate(45deg);
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 3px;
+            background-color: $btn-color;
+        }
+
+        &::before {
+            top: 50%;
+            transform: rotate(-45deg);
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 3px;
+            background-color: $btn-color;
+        }
+    }
+
+    .main-btn {
+        width: 220px;
+    }
+
+}
+
+@media (max-width: 1000px) {
+    .create {
+        &__form {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 690px)  {
+    .create {
+
+        .create-ingredient {
+            position: relative;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        &__ingredients {
+            flex: 100%;
+        }
+
+        &__ingredients-items {
+            width: 100%;
+        }
+
+        .create-ingredient > &__delete-btn {
+            position: absolute;
+            top: 15px;
+            right: 0;
+        }
+
+        .create-ingredient__item {
+            margin-top: 15px;
+        }
+    }
+}
+@media (max-width: 585px)  {
+    .create {
+        .create-ingredient__item {
+            margin-left: 0;
+        }
+        &__ingredients,
+        &__instructions-content {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column-reverse;
+        }
+
+        &__instructions-items {
+            margin-left: 0;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .create {
+
+        &__info {
+            flex-direction: column;
+        }
+
+        &__info-item + &__info-item {
+            margin-left: 0;
+        }
+    }
+}
+
+
+@media (max-width: 415px) {
+    .create {
+        &__form {
+            padding: 20px 10px;
+        }
+    }
+}

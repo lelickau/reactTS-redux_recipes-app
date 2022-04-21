@@ -2,69 +2,49 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import { db } from "firebase-config"
 import { collection, getDocs, addDoc, query, where, doc, deleteDoc  } from "firebase/firestore"
-import { IImageData, IRecipeInStore } from "models/IRecipe";
+import { IRecipeInStore } from "models/IRecipe";
 
 interface InitialStateFavorites {
     favorites: any[];
+    imgLink: string | null;
     status: string | null;
-    error:  string | null | unknown;
+    error:  string | null | undefined;
 }
 
-export const getFavoritesRecipes = createAsyncThunk(
+export const getFavoritesRecipes = createAsyncThunk<any[], string, {rejectValue: string}>(
     'favorites/getFavoritesRecipes',
-    async (id: string, {rejectWithValue, dispatch}) => {
+    async (id: string, {rejectWithValue}) => {
         try {
             const q = query(collection(db, "favorites"), where("userId", "==", id))
             const querySnapshot = await getDocs(q)
             const allFav = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))
             //
-            const favotitesIdData: string[] = []
-            const nowDate = Date.now()
-            const updateTime = localStorage.getItem('updateTime')
-            if ((!updateTime && allFav.length) || (updateTime && allFav.length && +updateTime < nowDate)) {
-                localStorage.setItem('updateTime', (nowDate + 3600000).toString())
-                allFav.forEach((item: any) => favotitesIdData.push(item.recipeId))
-                console.log(favotitesIdData)
-                dispatch(getFavs(allFav))
-                dispatch(getFavoritesImagesRecipes(favotitesIdData))
-            } else {
-                dispatch(getFavs(allFav))
-            }
-            //
-            //return allFav
+            return allFav
         } catch (e) {
             console.log("Error getting document: ", e)
-            return rejectWithValue(e)
+            return rejectWithValue('Error getting document')
         }
     }
 )
 
 
-export const getFavoritesImagesRecipes = createAsyncThunk(
-    'favorites/getFavoritesImagesRecipes',
-    async (idArr: string[], {rejectWithValue, dispatch}) => {
+export const getFavoritesImageRecipe = createAsyncThunk<string, string, {rejectValue: string}>(
+    'favorites/getFavoritesImageRecipe',
+    async (recipeId: string, {rejectWithValue}) => {
         try {
-            const imgData: IImageData[] = []
-            idArr.forEach(async (id) => {
-                const response = await axios.get(
-                    `${process.env.REACT_APP_RECIPES_APP_URL}/${id}?type=public&app_id=${process.env.REACT_APP_RECIPES_APP_ID}&app_key=${process.env.REACT_APP_RECIPES_APP_KEY}&field=image`
-                )
-                imgData.push({
-                    recipeId: id,
-                    urlImg: response.data.recipe.image
-                })
-                console.log(response.data.recipe.image)
-            })
-            dispatch(updateImg(imgData))
-            return imgData
+            const response = await axios.get(
+                `${process.env.REACT_APP_RECIPES_APP_URL}/${recipeId}?type=public&app_id=${process.env.REACT_APP_RECIPES_APP_ID}&app_key=${process.env.REACT_APP_RECIPES_APP_KEY}&field=image`
+            )
+            return response.data.recipe.image
+
         } catch (e) {
             console.log("Error getting document: ", e)
-            return rejectWithValue(e)
+            return rejectWithValue('Error getting document')
         }
     }
 )
 
-export const addFavoriteRecipe = createAsyncThunk(
+export const addFavoriteRecipe = createAsyncThunk<any, IRecipeInStore, {rejectValue: string}>(
     'favorites/addFavoriteRecipe',
     async (query: IRecipeInStore, {rejectWithValue}) => {
         try {
@@ -81,12 +61,12 @@ export const addFavoriteRecipe = createAsyncThunk(
             }
         } catch (e) {
             console.error("Error adding document: ", e)
-            return rejectWithValue(e)
+            return rejectWithValue('Error adding document')
         }
     }
 )
 
-export const deleteFavoriteRecipe = createAsyncThunk(
+export const deleteFavoriteRecipe = createAsyncThunk<string, string, {rejectValue: string}>(
     'favorites/deleteFavoriteRecipe',
     async (id: string, {rejectWithValue}) => {
         try {
@@ -94,13 +74,14 @@ export const deleteFavoriteRecipe = createAsyncThunk(
             return id
         } catch (e) {
             console.error("Error delete document: ", e)
-            return rejectWithValue(e)
+            return rejectWithValue('Error delete document')
         }
     }
 )
 
 const initialState: InitialStateFavorites = {
     favorites: [],
+    imgLink: null,
     status: null,
     error:  null,
 }
@@ -109,23 +90,7 @@ export const favoritesSlice = createSlice({
     name: 'favorites',
     initialState,
     reducers: {
-        getFavs: (state, action) => {
-            state.favorites = action.payload
-            state.status = 'resolve'
-            state.error = ''
-        },
-        updateImg: (state, action) => {
-            action.payload.forEach((id:IImageData) => {
-                state.favorites = state.favorites.map((fav: IRecipeInStore) => {
-                    console.log(id.recipeId, ' ', fav.recipeId)
-                    if (id.recipeId === fav.recipeId) {
-                        return {...fav, [fav.image]: id.urlImg}
-                    } else {
-                        return {...fav}
-                    }
-                })
-            })
-        }
+
     },
     extraReducers: (builder) => {
         builder
@@ -133,11 +98,11 @@ export const favoritesSlice = createSlice({
             state.status = 'loading'
             state.error = ''
         })
-        // .addCase(getFavoritesRecipes.fulfilled, (state, action) => {
-        //     state.favorites = action.payload
-        //     state.status = 'resolve'
-        //     state.error = ''
-        // })
+        .addCase(getFavoritesRecipes.fulfilled, (state, action) => {
+            state.favorites = action.payload
+            state.status = 'resolve'
+            state.error = ''
+        })
         .addCase(getFavoritesRecipes.rejected, (state, action) => {
             state.status = 'rejected'
             state.error = action.payload
@@ -168,20 +133,11 @@ export const favoritesSlice = createSlice({
             state.status = 'rejected'
             state.error = action.payload
         })
-        .addCase(getFavoritesImagesRecipes.fulfilled, (state, action) => {
-            action.payload.forEach(id => {
-                state.favorites = state.favorites.map((fav: IRecipeInStore) => {
-                    console.log(id.recipeId, ' ', fav.recipeId)
-                    if (id.recipeId === fav.recipeId) {
-                        return {...fav, [fav.image]: id.urlImg}
-                    } else {
-                        return {...fav}
-                    }
-                })
-            })
+        .addCase(getFavoritesImageRecipe.fulfilled, (state, action) => {
+            state.imgLink = action.payload
         })
     }
 })
 
-export const {getFavs, updateImg} = favoritesSlice.actions
+export const {} = favoritesSlice.actions
 export default favoritesSlice.reducer

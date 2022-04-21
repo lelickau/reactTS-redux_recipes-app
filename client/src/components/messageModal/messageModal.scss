@@ -1,0 +1,78 @@
+@import '../../styles/variables.scss';
+
+
+.modal {
+
+    &__message {
+        position: fixed;
+        background-color: rgba(43, 43, 43, 0.6);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        display: none;
+    }
+
+    &__content-box {
+        position: absolute;
+        @include box-styles;
+        padding: 15px;
+        width: fit-content;
+        margin-left: 15px;
+        margin-right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &__message--active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__message-text {
+        text-align: center;
+        margin-top: 15px;
+        @include subtitle-fonts;
+    }
+
+    &__content-item {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        padding: 25px;
+    }
+
+    &__close {
+        display: flex;
+        justify-content: flex-end;
+        cursor: pointer;
+        position: relative;
+        min-width: 25px;
+        height: 25px;
+
+        &::after {
+            top: 50%;
+            transform: rotate(45deg);
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 3px;
+            background-color: $btn-color;
+        }
+
+        &::before {
+            top: 50%;
+            transform: rotate(-45deg);
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 3px;
+            background-color: $btn-color;
+        }
+    }
+}

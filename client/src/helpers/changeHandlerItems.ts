@@ -1,28 +1,32 @@
 import { ChangeEvent } from "react"
+import { validateFormDataCreateRecipe } from "./validateFormDataCreateRecipe"
 
 export const changeHandlerItems = (
-        dataState: any[],
         e: ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>,
-        changeStateFun: (value: React.SetStateAction<any[]>
-    ) => void) => {
+        formStateData: any[],
+        setFormStateData: (value: React.SetStateAction<any[]>) => void
+    ) => {
 
     const id = e.target.getAttribute('data-id')
-    const elem = dataState.find(item => item.id === id)
-    if (elem) {
-        const ingr = dataState.map((item: any) => {
-                if (item.id === id) {
-                    return {
-                        ...item,
-                        [e.target.name]: e.target.value
-                    }
+    const elemIndex = formStateData.findIndex(item => item.id === id)
+    if (elemIndex !== -1) {
+        const formData = formStateData.map((item: any) => {
+
+            if (item.id === id) {
+                return {
+                    ...item,
+                    [e.target.name]: e.target.value,
+                    error: false
                 }
-                return {...item}
-            })
-            changeStateFun(ingr)
+            }
+            return {...item}
+        })
+        const validData = validateFormDataCreateRecipe(formData)
+        setFormStateData(validData)
     } else {
-        changeStateFun([
-            ...dataState,
-            {[e.target.name]: e.target.value, id: id}
+        setFormStateData([
+            ...formStateData,
+            {[e.target.name]: e.target.value, id}
         ])
     }
 }

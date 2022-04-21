@@ -1,0 +1,64 @@
+@import '../../styles/variables.scss';
+
+.edit {
+    position: relative;
+    padding-right: 10px;
+
+    &__header {
+        @include box-styles;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+
+    .main-input{
+        margin-top: 15px;
+    }
+
+    &__delete {
+        cursor: pointer;
+        padding: 10px;
+        @include box-styles;
+        background-color: #F4F4F4;
+        border: none;
+    }
+}
+
+@media (max-width: 1300px) {
+    .edit {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1050px) {
+    .edit {
+        width: 100%;
+        padding-left:0;
+    }
+}
+
+@media (max-width: 1000px) {
+    .edit {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 70px;
+    }
+}
+
+@media (max-width: 690px) {
+    .edit {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+    }
+}
+
+@media (max-width: 415px) {
+    .edit {
+        &__header {
+            margin-bottom: 10px;
+        }
+    }
+}

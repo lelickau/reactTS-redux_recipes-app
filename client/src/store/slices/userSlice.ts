@@ -1,6 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-const initialState = {
+interface UserInitialState {
+    email: string | null;
+    token: string | null;
+    id: string;
+}
+
+const initialState: UserInitialState = {
     email: null,
     token: null,
     id: '',
@@ -21,7 +27,7 @@ const userSlice = createSlice({
             state.token = null
             state.id = ''
         },
-    },
+    }
 })
 
 export const {setUser, removeUser} = userSlice.actions

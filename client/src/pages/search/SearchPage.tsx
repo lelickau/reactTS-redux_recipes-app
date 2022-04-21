@@ -9,6 +9,7 @@ import './searchPage.scss'
 import { nextSearchRecipes, searchRecipes } from 'store/slices/recipesSlice'
 import Preloader from 'components/preloader/Preloader'
 import { IRecipeInStore } from 'models/IRecipe'
+import plateImg from 'resources/img/plate.png'
 
 const SearchPage:FC = () => {
     const dispatch  = useAppDispatch()
@@ -26,9 +27,33 @@ const SearchPage:FC = () => {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
-    let [checkbox, setCheckbox] = useState('')
+    const cutCheckboxItem = (checkboxStr: string) => {
+        const newCheckboxData = checkbox.filter(item => item !== checkboxStr)
+        setCheckbox(newCheckboxData)
+    }
+
+    const addCkeckboxItem = (checkboxStr: string) => {
+        setCheckbox([
+            ...checkbox,
+            checkboxStr
+        ])
+    }
+
+    let [checkbox, setCheckbox] = useState<any[]>([])
     const changeHandlerCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
-        setCheckbox(checkbox+=`&${e.target.name}=${e.target.value}`)
+        const checkboxStr = `&${e.target.name}=${e.target.value}`
+        if (checkbox.length) {
+            for (const item of checkbox) {
+                if (item === checkboxStr) {
+                    cutCheckboxItem(checkboxStr)
+                    break
+                } else {
+                    addCkeckboxItem(checkboxStr)
+                }
+            }
+        } else {
+            return addCkeckboxItem(checkboxStr)
+        }
     }
 
     const [errorIngr, setErrorIngr] = useState('')
@@ -48,7 +73,8 @@ const SearchPage:FC = () => {
 
     const searchRecipe = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        dispatch(searchRecipes({...form, filters: checkbox, numOfIngr}))
+        const checkboxStr = checkbox.join('')
+        dispatch(searchRecipes({...form, filters: checkboxStr, numOfIngr}))
     }
 
     type Filters = {
@@ -139,8 +165,12 @@ const SearchPage:FC = () => {
         {status === 'loading' && <Preloader isLocal={true}/>}
         {
             recipes?.length
-            ? recipes.map((recipe: IRecipeInStore, index) => <RecipeItem key={index+recipe.id} idRecipe={index} recipe={recipe} />)
-            : error
+            ? recipes.map((recipe: IRecipeInStore, index) =>
+                <RecipeItem key={index+recipe.id} idRecipe={index} recipe={recipe} />)
+            : error && <div className='search__error'>
+                            <span className='search__error-text'>{error}</span>
+                            <img className='search__error-img' src={plateImg} alt="Dish" />
+                        </div>
         }
         </div>
         {

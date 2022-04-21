@@ -1,26 +1,22 @@
 import Dish from './Dish';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
-import { IRecipeInStore } from 'models/IRecipe';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router';
-import { addFavoriteRecipe, deleteFavoriteRecipe } from 'store/slices/favoritesSlice'
-
-interface FavDishParams {
-    id: string;
-}
+import { deleteFavoriteRecipe, getFavoritesImageRecipe } from 'store/slices/favoritesSlice'
+import { IParams } from 'models/IParams';
+import { changeFavs } from 'store/slices/recipesSlice';
 
 const FavDish: FC = () => {
     const dispatch = useAppDispatch()
-    const params = useParams<FavDishParams>()
-    const {id} = useParams<FavDishParams>()
-    const recipe:IRecipeInStore = useAppSelector(state => state.favorites.favorites[+id])
+    const {id} = useParams<IParams>()
+    const {imgLink, favorites} = useAppSelector(state => state.favorites)
     const userId = useAppSelector(state => state.user.id)
 
     const history = useHistory()
-    console.log(params)
 
     const deleteFav = () => {
-        dispatch(deleteFavoriteRecipe(recipe.id))
+        dispatch(deleteFavoriteRecipe(favorites[+id].id))
+        dispatch(changeFavs(favorites[+id].recipeId))
         history.push('/favs')
     }
 
@@ -28,15 +24,23 @@ const FavDish: FC = () => {
         history.push('/favs')
     }
 
-    if (!recipe) {
+    if (!favorites[+id]) {
         history.push('/favs')
     }
+
+    useEffect(() => {
+        if (favorites[+id].recipeId) {
+            dispatch(getFavoritesImageRecipe(favorites[+id].recipeId))
+        }
+    }, [id, dispatch, favorites])
+
     return (
         <Dish
-            recipe={recipe}
+            recipe={favorites[+id]}
             backToSearch={backToSearch}
             onClick={deleteFav}
             userId={userId}
+            imgLink={imgLink}
         />
     );
 };

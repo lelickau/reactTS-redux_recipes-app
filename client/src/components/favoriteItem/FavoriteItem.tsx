@@ -1,31 +1,29 @@
 import React, {FC, useState} from 'react';
 
 import sourceIco from 'resources/ico/source.svg'
-import openPanel from 'resources/ico/open.svg'
-import deleteIco from 'resources/ico/delete.svg'
+import weightIco from 'resources/ico/weight.svg'
+import kcalIco from 'resources/ico/kcal.svg'
 import './favoriteItem.scss'
 import { useAppDispatch } from 'hooks/reduxHooks';
 import { deleteFavoriteRecipe } from 'store/slices/favoritesSlice';
 import { changeFavs } from 'store/slices/recipesSlice';
 import { NavLink } from 'react-router-dom';
+import { IRecipeInStore } from 'models/IRecipe';
+import Delete from 'components/UI/delete/Delete';
+import OpenPanelIco from 'components/UI/openPanelIco/OpenPanelIco';
 
 interface FavoriteItemProps {
-    label: string;
-    source: string;
-    sourceUrl: string;
-    id: string;
-    recipeId: string;
-    imgUrl: string;
     idx: number;
+    recipe: IRecipeInStore;
 }
 
-const FavoriteItem: FC<FavoriteItemProps> = ({label, source, sourceUrl, id, recipeId, imgUrl, idx}) => {
+const FavoriteItem: FC<FavoriteItemProps> = ({recipe, idx}) => {
     const dispatch = useAppDispatch()
     const [active, setActive] = useState(false)
 
     const deleteFav = () => {
-        dispatch(deleteFavoriteRecipe(id))
-        dispatch(changeFavs(recipeId))
+        dispatch(deleteFavoriteRecipe(recipe.id))
+        dispatch(changeFavs(recipe.recipeId))
     }
 
     const toggleMenu = () => {
@@ -34,25 +32,40 @@ const FavoriteItem: FC<FavoriteItemProps> = ({label, source, sourceUrl, id, reci
 
     return (
         <div className="favorite">
-            <div className={`favorite__main  ${active && 'favorite__main--active'}`}>
+            <div className={`favorite__main  ${active ? 'favorite__main--active' : ''}`}>
                 <div className="favorite__content">
-                    <img className='favorite__img' src={imgUrl} alt={label} />
+                    <div className="favorite__descr">
+                        <div className="favorite__total">
+                            <img
+                                className="favorite__total-ico"
+                                src={weightIco}
+                                alt="Weight"
+                            />
+                            <span className="favorite__total-count">{recipe.totalWeight}g</span>
+                        </div>
+                        <div className="favorite__total">
+                            <img
+                                className="favorite__total-ico"
+                                src={kcalIco}
+                                alt="Colories"
+                            />
+                            <span className="favorite__total-count">{recipe.calories}Cal</span>
+                        </div>
+                    </div>
                     <div className="favorite__text">
-                        <NavLink to={`favs/${idx}`}><h2 className='favorite__title'>{label}</h2></NavLink>
+                        <NavLink to={`favs/${idx}`}><h2 className='favorite__title'>{recipe.label}</h2></NavLink>
                         <div className="favorite__source">
                             <img className='favorite__source-ico' src={sourceIco} alt="Sourse" />
-                            <a href={sourceUrl} target="_blank" className='favorite__source-text'>{source}</a>
+                            <a href={recipe.url} target="_blank" rel='noreferrer' className='favorite__source-text'>{recipe.source}</a>
                         </div>
                     </div>
                 </div>
                 <div className="favorite__btn-panel" onClick={toggleMenu}>
-                    <img className='favorite__panel-ico' src={openPanel} alt="Info" />
+                    <OpenPanelIco isOpenPanel={active ? true : false}/>
                 </div>
             </div>
-            <div className={`favorite__btns ${active && 'favorite__btns--active'}`}>
-                <button className='favorite__btn-delete' onClick={deleteFav}>
-                    <img src={deleteIco} alt="Delete" />
-                </button>
+            <div className={`favorite__btns ${active ? 'favorite__btns--active' : ''}`} onClick={deleteFav}>
+                <Delete color='#ffffff'/>
             </div>
         </div>
     );

@@ -47,7 +47,9 @@ const RecipeDescription:FC<RecipeDescriptionProps> = ({label, url, source, cuisi
                         <a
                             className="recipe-descr__source"
                             target="_blank"
-                            href={url}>"{source}"
+                            href={url}
+                            rel="noreferrer"
+                            >"{source}"
                         </a>
                     </div>
                 </div>

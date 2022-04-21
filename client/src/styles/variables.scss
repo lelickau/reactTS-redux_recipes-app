@@ -1,9 +1,11 @@
 $main-bg: #F9F9F9;
 $box-color: #FFFFFF;
-$text-color: #5C5C5C;
+$text-color: #333333;
 $placeholder-color: #A1A1A1;
 $accent-color: #015543;
 $btn-color: #FF3B30;
+$point_1: #FFAE1B;
+$point_2: #79AD3E;
 
 @mixin title-fonts {
     color: $text-color;

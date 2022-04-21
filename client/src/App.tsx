@@ -15,9 +15,8 @@ const App:FC = () => {
     const dispatch = useAppDispatch()
     const [isAuth, setIsAuth] = useState(false)
 
-    //const app = initializeApp(firebaseConfig)
     const auth = getAuth()
-    const [userData, loading, error] = useAuthState(auth)
+    const [, loading] = useAuthState(auth)
 
 
     useEffect(() => {

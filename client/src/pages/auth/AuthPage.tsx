@@ -1,17 +1,20 @@
-import Form from 'components/authForm/Form';
 import React, { FC, FormEvent, useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { setUser } from 'store/slices/userSlice';
 import { useHistory } from 'react-router';
 import { useAppDispatch } from 'hooks/reduxHooks';
+import { IUser } from 'models/IUser';
+import Form from 'components/authForm/Form';
 
 import './authPage.scss';
+import ErrorIco from 'components/UI/errorIco/ErrorIco';
 
 const AuthPage:FC = () => {
     const dispatch = useAppDispatch()
     const {push} = useHistory()
 
-    const [form, setForm] = useState(true)
+    const [error, setError] = useState('')
+    const [isLogin, setLogin] = useState(true)
     const [formText, setFormText] = useState({
         question: 'New user?',
         btnTitle: 'Create an account'
@@ -21,8 +24,8 @@ const AuthPage:FC = () => {
         e.preventDefault();
     }
 
-    const clickHandler = (user:{email: string, password: string, username?:string}) => {
-        if (form) {
+    const clickHandler = (user:IUser) => {
+        if (isLogin) {
             clickHandlerLogin(user.email, user.password)
         } else {
             clickHandlerSignup(user.email, user.password)
@@ -30,10 +33,10 @@ const AuthPage:FC = () => {
     }
 
     const clickHandlerLogin = (email: string, password: string) => {
+        setError('')
         const auth = getAuth()
         signInWithEmailAndPassword(auth, email, password)
         .then(({user}) => {
-            console.log(user)
             dispatch(setUser({
                 email: user.email,
                 token: user.refreshToken,
@@ -41,14 +44,17 @@ const AuthPage:FC = () => {
             }))
             push('/')
         })
-        .catch(console.error)
+        .catch((e) => {
+            console.log(e)
+            setError('Incorrect email or password.')
+        })
     }
 
     const clickHandlerSignup = (email: string, password: string) => {
+        setError('')
         const auth = getAuth()
         createUserWithEmailAndPassword(auth, email, password)
         .then(({user}) => {
-            console.log(user)
             dispatch(setUser({
                 email: user.email,
                 token: user.refreshToken,
@@ -56,12 +62,16 @@ const AuthPage:FC = () => {
             }))
             push('/')
         })
-        .catch(console.error)
+        .catch((e) => {
+            console.log(e)
+            setError('Something went wrong. Try again later.')
+        })
     }
 
     const changeForm = () => {
-        setForm(!form)
-        if (form) {
+        setError('')
+        setLogin(!isLogin)
+        if (isLogin) {
             setFormText({
                 question: 'Already have an account?',
                 btnTitle: 'Sign in'
@@ -81,10 +91,16 @@ const AuthPage:FC = () => {
                     className="auth__form"
                     onSubmit={preventDefForm}
                 >
+                    { error &&
+                        <div className="auth__form-error">
+                            <ErrorIco/>
+                            <span className="auth__form-error-text">{error}</span>
+                        </div>
+                    }
                     <Form
-                        title={form ? 'Sign in' : 'Create'}
+                        title={isLogin ? 'Sign in' : 'Create'}
                         handleClick={clickHandler}
-                        isLoginForm={form}
+                        isLoginForm={isLogin}
                     />
                 </form>
                 <div className="auth__change-auth">

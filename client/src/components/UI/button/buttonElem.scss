@@ -1,12 +1,13 @@
 @import '../../../styles/variables.scss';
 
 .main-btn {
+    position: relative;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-left: 40px;
+    padding-right: 40px;
     width: fit-content;
     height: 42px;
     color: $box-color;
@@ -18,4 +19,13 @@
     box-shadow: 0px 4px 19px rgba(0, 0, 0, 0.04);
     border-radius: 10px;
     margin: 0 auto;
+
+    &__loading {
+        height: 25px;
+        width: 25px;
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 }

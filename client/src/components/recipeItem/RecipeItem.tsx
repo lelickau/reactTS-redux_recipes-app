@@ -37,7 +37,7 @@ const RecipeItem:FC<RecipesProps> = ({recipe, idRecipe}) => {
     return (
         <article className="recipe">
             <div className="recipe__img-box">
-                <img className="recipe__img" src={recipe.image} alt={recipe.label}  />
+                <img className="recipe__img" src={recipe.image} alt={recipe.label} />
             </div>
             <div className="recipe__descr">
                 <RecipeDescription

@@ -1,13 +1,24 @@
 export interface IMyIngr {
     id: string;
     ingr: string;
-    quant: number;
+    quant: number | string;
     measure: string;
+    error: boolean;
 }
 
-interface IMyInstruction {
+export interface IMySteps {
     id: string;
     step: string;
+    placeholder: string;
+    error: boolean;
+}
+
+export interface IForm {
+    userId: string;
+    time: string | number;
+    servings: string | number;
+    notes: string;
+    id: string;
 }
 
 export interface IMyRecipe {
@@ -15,8 +26,8 @@ export interface IMyRecipe {
     userId: string;
     label: string;
     ingredients: IMyIngr[];
-    instructions?: IMyInstruction[];
-    time?: number;
-    servings?: number;
+    instructions: IMySteps[];
+    time?: number | string;
+    servings?: number | string;
     notes?: string;
 }

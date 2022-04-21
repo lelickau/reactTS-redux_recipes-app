@@ -1,0 +1,36 @@
+@import '../../../styles/variables.scss';
+
+.eye-ico{
+    transition: all .3s;
+    cursor: pointer;
+    position: relative;
+    width: 22px;
+    height: 22px;
+    transform: rotate(45deg);
+    border-top-left-radius: 500%;
+    border-bottom-right-radius: 450%;
+    border: solid 2px $placeholder-color;
+    &::after {
+        position:absolute;
+        content: '';
+        width: 27px;
+        height: 2px;
+        background: $placeholder-color;
+        top:45%;
+        left:-20%;
+        border-bottom: 2px solid #fff;
+
+    }
+    &--active {
+        &::after {
+            position:absolute;
+            content: '';
+            width: 7px;
+            height: 7px;
+            background: $placeholder-color;
+            top:35%;
+            left:33%;
+            border-radius: 50%;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 @import '../../styles/variables.scss';
-$loader-colors: $accent-color, $btn-color, crimson, peachpuff, chocolate, pink;
+$loader-colors: $text-color, $accent-color, $btn-color, $point_1, $point_2;
 $loader-dash: 63;
 $loader-duration: length($loader-colors) * 1s;
 $loader-duration-alt: $loader-duration / length($loader-colors);

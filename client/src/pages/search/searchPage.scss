@@ -182,8 +182,16 @@
         margin: 0 auto;
     }
 
+    &__error {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+    &__error-img {
+        max-width: 230px;
+    }
 }
-
 
 @media (max-width: 1700px) {
     .search {
@@ -225,6 +233,14 @@
         .item-filter {
             width: 33%;
         }
+    }
+}
+
+@media (max-width: 1000px) {
+    .search {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 70px;
     }
 }
 
@@ -315,7 +331,7 @@
 
 @media (max-width: 550px) {
     .search {
-        padding: 10px;
+        padding-top: 10px;
         &__content {
             grid-template-columns: repeat(1, 1fr);
         }

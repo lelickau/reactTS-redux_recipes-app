@@ -2,27 +2,26 @@ import RecipeDescription from 'components/recipeDescription/RecipeDescription';
 import ButtonFavs from 'components/UI/buttonFavs/ButtonFavs';
 import { IDigest, IIngredients, IRecipeInStore } from 'models/IRecipe';
 import React, { FC } from 'react';
-
-import backIco from 'resources/ico/back.svg'
-import './dish.scss'
 import Tag from 'components/UI/tag/Tag';
+import ButtonBack from 'components/UI/buttonBack/ButtonBack';
+
+import './dish.scss'
 
 interface DishParams {
     recipe: IRecipeInStore;
     backToSearch: () => void;
     onClick: () => void;
     userId: string;
+    imgLink?: string | null;
 }
 
-const Dish: FC<DishParams> = ({recipe, backToSearch, onClick, userId}) => {
+const Dish: FC<DishParams> = ({recipe, backToSearch, onClick, userId, imgLink}) => {
 
     return (
         <section className="dish">
             { recipe && <>
                 <div className="dish__control">
-                    <button className="dish__back-link" onClick={backToSearch}>
-                        <img className="dish__back-ico" src={backIco} alt="Back"/>
-                    </button>
+                    <ButtonBack backTo={backToSearch}/>
                     { userId &&
                         <ButtonFavs active={recipe.favorite} addFavs={onClick}/>
                     }
@@ -30,7 +29,7 @@ const Dish: FC<DishParams> = ({recipe, backToSearch, onClick, userId}) => {
                 <div className="dish__main">
                     <article className="dish__header">
                         <div className="dish__img-box">
-                            <img className="dish__img" src={recipe.image} alt={recipe.label} />
+                            <img className="dish__img" src={imgLink ? imgLink : recipe.image} alt={recipe.label} />
                         </div>
                         <div className="dish__descr">
                             <RecipeDescription
@@ -67,16 +66,16 @@ const Dish: FC<DishParams> = ({recipe, backToSearch, onClick, userId}) => {
                         <h1 className="dish__ingredients-title title">Ingredients:</h1>
                         <ul className="dish__ingredients-list">
                         {
-                            recipe.ingredients?.map((ingr: IIngredients) =>
+                            recipe.ingredients?.map((ingr: IIngredients, idx) =>
                                 <li
                                     className="dish__ingredient-item"
-                                    key={ingr.foodId}
+                                    key={ingr.foodId+idx}
                                 >{ingr.food} {ingr.weight}g</li>)
                         }
                         </ul>
                     </article>
                     <article className="dish__health">
-                        { recipe.healthLabels?.map((tag) => <Tag label={tag}/>) }
+                        { recipe.healthLabels?.map((tag) => <Tag label={tag} key={tag}/>) }
                     </article>
                 </div>
             </>

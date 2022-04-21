@@ -26,8 +26,8 @@ const Sidebar:FC<IIsAuth> = ({isAuth}) => {
                 dispatch(removeUser())
                 push('/')
             })
-            .catch((error) => {
-                console.log(error)
+            .catch((e) => {
+                console.log(e)
             })
     }
 

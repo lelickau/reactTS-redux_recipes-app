@@ -1,155 +1,157 @@
+import CreateForm from 'components/createForm/CreateForm';
+import MessageModal from 'components/messageModal/MessageModal';
 import { changeHandlerItems } from 'helpers/changeHandlerItems';
+import { checkValidFormBeforeSending } from 'helpers/checkValidFormBeforeSending';
+import { deleteFormElem } from 'helpers/deleteFormElem';
+import { resetCreateForm } from 'helpers/resetCteateForm';
+import { validateFormDataCreateRecipe } from 'helpers/validateFormDataCreateRecipe';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
-import React, { ChangeEvent, FC, MouseEvent, useState } from 'react';
-import { createRecipe } from 'store/slices/myRecipesSlice';
-import CreateIngredientItem from '../../components/createIngredientItem/CreateIngredientItem';
-import ButtonElem from '../../components/UI/button/ButtonElem';
-import ButtonAdd from '../../components/UI/buttonAdd/ButtonAdd';
-import InputElem from '../../components/UI/input/InputElem';
-import TextareaElem from '../../components/UI/textareaElem.tsx/TextareaElem';
+import { useInput } from 'hooks/useInput';
+import { IForm, IMyIngr, IMySteps } from 'models/IMyRecipe';
+import React, { ChangeEvent, FC, FocusEvent, MouseEvent, useEffect, useState } from 'react';
+import { createRecipe, resetStatus } from 'store/slices/myRecipesSlice';
 
 import './createPage.scss';
 
 const CreatePage:FC = () => {
+    const {status} = useAppSelector(state => state.myRecipe)
     const {id} = useAppSelector(state => state.user)
     const dispatch = useAppDispatch()
 
-    const [instructionItems, setInstructionItem] = useState([
-        {placeholder: 'step 1', id: 'step1'},
-    ])
-    const addInstruction = (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        let idx = instructionItems.length + 1
-        setInstructionItem([...instructionItems, {placeholder: `step ${idx}`, id: `step${idx}`}])
-    }
+    const [validStatus, setValidStatus] = useState<boolean | string>(true)
 
-    const [ingrItems, setIngrItem] = useState([{ingr: 'food1'}])
-    const addIngredient = (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        let idx = ingrItems.length + 1
-        setIngrItem([...ingrItems, {ingr: `food${idx}`}])
+    const label = useInput('', {isEmpty: true, minLength: 1})
+    const onChangeLabel = (e: ChangeEvent<HTMLInputElement>) => {
+        setValidStatus(true)
+        label.onChange(e)
     }
-
-    const [form, setForm] = useState({
-        label: '',
-        userId: id,
-        time: 0,
-        servings: 0,
-        notes: '',
-        id: '',
-    })
+    const onBlurLabel = (e: FocusEvent<HTMLInputElement>) => {
+        setValidStatus(true)
+        label.onChange(e)
+    }
 
     const createMyRecipe = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        console.log({
-            ...form,
-            ingredients: ingredientFormItems,
-            instructions: instructionsFormItems,
-        })
-        dispatch(createRecipe({
-            ...form,
-            ingredients: ingredientFormItems,
-            instructions: instructionsFormItems,
-        }))
+        const validStatus = checkValidFormBeforeSending(ingredientFormData, label.value)
+
+        if (validStatus === 'error-label') {
+            setValidStatus('error-label')
+        } else if (!validStatus) {
+            const validateIngr = validateFormDataCreateRecipe(ingredientFormData)
+            setIngredientFormData(validateIngr)
+        } else {
+            console.log({...form,label: label.value,ingredients: ingredientFormData,instructions: stepsFormData,})
+            dispatch(createRecipe({
+                ...form,
+                label: label.value,
+                ingredients: ingredientFormData,
+                instructions: stepsFormData,
+            }))
+        }
     }
+
+    useEffect(()=> {
+        if (status === 'resolve') {
+            resetCreateForm(setForm, setStepsFormData, setIngredientFormData, id)
+            label.resetValue()
+        }
+        if (status === 'resolve' || status === 'rejected') {
+            setTimeout(() => {
+                dispatch(resetStatus())
+            }, 5000)
+        }
+    }, [status, label, dispatch, id])
+
+    const [form, setForm] = useState<IForm>({
+        userId: id,
+        time: '',
+        servings: '',
+        notes: '',
+        id: '',
+    })
 
     const changeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
     // ingr
-    const [ingredientFormItems, setIngredientFormItems] = useState<any[]>([])
+    const addIngredient = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        setIngredientFormData([...ingredientFormData, {id: `food${Date.now()}`, ingr: '', quant: '', measure: 'measure', error: false}])
+    }
+    const [ingredientFormData, setIngredientFormData] = useState<IMyIngr[]>([
+        {id: 'food1', ingr: '', quant: '', measure: 'measure', error: false}
+    ])
     const changeHandlerIngredients = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
-        changeHandlerItems(ingredientFormItems, e, setIngredientFormItems)
+        changeHandlerItems(e, ingredientFormData, setIngredientFormData)
+    }
+
+    const deleteIngr = (e: MouseEvent<HTMLDivElement>) => {
+        const updateIngredientsFormData = deleteFormElem(e, ingredientFormData)
+        if (updateIngredientsFormData?.length) {
+            setIngredientFormData(updateIngredientsFormData)
+        }
     }
 
     // instruct
-    const [instructionsFormItems, setInstructionsFormItems] = useState<any[]>([])
-    const changeHandlerInstructions = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        changeHandlerItems(instructionsFormItems, e, setInstructionsFormItems)
+    const [stepsFormData, setStepsFormData] = useState<IMySteps[]>([
+        {placeholder: 'step 1', id: 'step1', step: '', error: false},
+    ])
+
+    const addStep = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        let idx = stepsFormData.length + 1
+        const stepId = Date.now()
+        setStepsFormData([...stepsFormData, {placeholder: `step ${idx}`, id: `step${stepId}`, step: '', error: false}])
+    }
+
+    const changeHandlerSteps = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        changeHandlerItems(e, stepsFormData, setStepsFormData)
+    }
+
+    const deleteStep = (e: MouseEvent<HTMLDivElement>) => {
+        const updateStepsForm = deleteFormElem(e, stepsFormData)
+        if (updateStepsForm?.length) {
+            const updataPlaceholder = updateStepsForm.map((item, idx) => ({...item, placeholder: `step ${idx+1}`}))
+            setStepsFormData(updataPlaceholder)
+        }
+    }
+
+    const setCloseModal = () => {
+        dispatch(resetStatus())
     }
 
     return (
         <article className="create">
-            <form className="create__form">
-                <h1 className="create__form-title">Adding a recipe</h1>
-                <label className="create__name">
-                    Name of the dish <span className="create__form-required">*</span>
-                    <InputElem
-                        placeholder="pizza"
-                        name="label"
-                        type="text"
-                        onChange={changeHandler}
-                    />
-                </label>
-                <div className="create__ingredients">
-                    <div className="create__add-btn">
-                        <ButtonAdd onClick={addIngredient}/>
-                    </div>
-                    <div className="create__ingredients-items">
-                        {
-                            ingrItems.map(item =>
-                                <CreateIngredientItem
-                                    ingr={item.ingr}
-                                    key={item.ingr}
-                                    onChange={changeHandlerIngredients}
-                            />)
-                        }
-                    </div>
-                </div>
-                <div className="create__instructions">
-                    <h3 className="create__instructions-title">Instructions</h3>
-                    <div className="create__instructions-content">
-                        <div className="create__add-btn">
-                            <ButtonAdd onClick={addInstruction}/>
-                        </div>
-                        <div className="create__instructions-items">
-                            {
-                                instructionItems.map(item =>
-                                    <TextareaElem
-                                        placeholderText={item.placeholder}
-                                        name='step'
-                                        key={item.id}
-                                        id={item.id}
-                                        onChange={changeHandlerInstructions}
-                                />)
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="create__info">
-                    <label className="create__info-item">
-                        Ready in (minutes)
-                        <InputElem
-                            placeholder="60"
-                            name="time"
-                            type="number"
-                            onChange={changeHandler}
-                        />
-                    </label>
-                    <label className="create__info-item">
-                        Servings
-                        <InputElem
-                            placeholder="4"
-                            name="servings"
-                            type="number"
-                            onChange={changeHandler}
-                        />
-                    </label>
-                </div>
-                <div className="create__info">
-                    <label className="create__info-notes">
-                        Chef's Notes
-                        <TextareaElem
-                            onChange={changeHandler}
-                            placeholderText='notes about the recipe '
-                            name='notes'
-                            id='notes'
-                        />
-                    </label>
-                </div>
-                <ButtonElem onClick={createMyRecipe}>Create</ButtonElem>
-            </form>
+            <MessageModal
+                status={status}
+                setCloseModal={setCloseModal}
+                successMessage='The recipe created successfully.'
+                errorMessage='Something went wrong. Try again later.'
+            />
+            <CreateForm
+                label={label}
+                onChangeLabel={onChangeLabel}
+                onBlurLabel={onBlurLabel}
+                titleForm={'Creating the recipe'}
+                form={form}
+                changeHandler={changeHandler}
+
+                addIngredient={addIngredient}
+                ingredientFormData={ingredientFormData}
+                changeHandlerIngredients={changeHandlerIngredients}
+                deleteIngr={deleteIngr}
+
+                addStep={addStep}
+                stepsFormData={stepsFormData}
+                changeHandlerSteps={changeHandlerSteps}
+                deleteStep={deleteStep}
+
+                saveMyRecipe={createMyRecipe}
+                validStatus={validStatus}
+                btnTitle={'Create'}
+                status={status}
+            />
         </article>
     );
 };

@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
 
     &__box {
         position: relative;
@@ -36,6 +37,16 @@
         text-decoration: underline;
         font-weight: 700;
     }
+
+    &__form-error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__form-error-text {
+        margin-left: 10px;
+    }
 }
 
 @media (max-width: 1400px) {
@@ -50,7 +61,6 @@
 @media (max-width: 1300px) {
     .auth {
         &__box {
-
             height: 374px;
         }
         &__change-auth {
@@ -65,6 +75,19 @@
 
 @media (max-width: 910px) {
     .auth {
-        padding-bottom: 123px;
+        //padding-bottom: 123px;
+    }
+}
+
+@media (max-width: 420px) {
+
+    .auth {
+        padding: 10px;
+        &__box {
+            padding-left: 20px;
+            padding-right: 20px;
+            min-width: 100%;
+            width: 100%;
+        }
     }
 }
