@@ -49,11 +49,17 @@ const CreateIngredientItem: FC <CreateIngredientItemProps> = ({ingr, onChange, i
                 >
                     <option value="measure" className="create-ingredient__measure">measure</option>
                     <option value="grams" className="create-ingredient__measure">grams</option>
-                    <option value="teaspoon" className="create-ingredient__measure">teaspoon</option>
-                    <option value="cups" className="create-ingredient__measure">cups</option>
-                    <option value="ounce" className="create-ingredient__measure">ounce</option>
-                    <option value="pinch" className="create-ingredient__measure">pinch</option>
+                    <option value="kilograms" className="create-ingredient__measure">kilograms</option>
+                    <option value="litres" className="create-ingredient__measure">litres</option>
+                    <option value="millilitres" className="create-ingredient__measure">millilitres</option>
                     <option value="tablespoon" className="create-ingredient__measure">tablespoon</option>
+                    <option value="teaspoon" className="create-ingredient__measure">teaspoon</option>
+                    <option value="dessertspoon" className="create-ingredient__measure">dessertspoon</option>
+                    <option value="cup" className="create-ingredient__measure">cup</option>
+                    <option value="pint" className="create-ingredient__measure">pint</option>
+                    <option value="gallon" className="create-ingredient__measure">gallon</option>
+                    <option value="fluidounce" className="create-ingredient__measure">fluid ounce</option>
+                    <option value="pinch" className="create-ingredient__measure">pinch</option>
                 </select>
             </div>
             {

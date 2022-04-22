@@ -21,11 +21,11 @@ const MyDish: FC = () => {
     const history = useHistory()
 
     const backToSearch = () => {
-        history.push('/favs')
+        history.push('/home')
     }
 
     if (!recipe) {
-        history.push('/favs')
+        backToSearch()
     }
 
     const deleteRecipeItem = (e: MouseEvent<HTMLButtonElement>) => {

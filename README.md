@@ -1,0 +1,1 @@
+Recipe search application | React TypeScript, Redux Toolkit, Firebase, Axios | Authorization, adding to favorites, creating your own recipes.
