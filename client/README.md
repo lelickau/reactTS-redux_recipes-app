@@ -1,4 +1,3 @@
-.env.local
 #### install: npm i
 #### start: npm start
 #### build: npm run build
